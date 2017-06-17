@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="Practica1Ubuntu" Version="10.0.0" InternalType="">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
+  <VirtualDirectory Name="src">
+    <VirtualDirectory Name="modelos">
+      <VirtualDirectory Name="perro">
+        <File Name="src/modelos/perro/lomo.cpp"/>
+        <File Name="src/modelos/perro/cabeza.cpp"/>
+        <File Name="src/modelos/perro/perro.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="item">
+        <File Name="src/modelos/item/item.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="jugador">
+        <File Name="src/modelos/jugador/jugador3d.cpp"/>
+        <File Name="src/modelos/jugador/quesito.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="puerta">
+        <File Name="src/modelos/puerta/puerta.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="leo">
+        <File Name="src/modelos/leo/brazo.cpp"/>
+        <File Name="src/modelos/leo/leo.cpp"/>
+        <File Name="src/modelos/leo/torso.cpp"/>
+        <File Name="src/modelos/leo/pierna.cpp"/>
+        <File Name="src/modelos/leo/cabeza.cpp"/>
+        <File Name="src/modelos/leo/cintura.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="aldeano">
+        <File Name="src/modelos/aldeano/aldeano.cpp"/>
+        <File Name="src/modelos/aldeano/brazo.cpp"/>
+        <File Name="src/modelos/aldeano/torso.cpp"/>
+        <File Name="src/modelos/aldeano/pierna.cpp"/>
+        <File Name="src/modelos/aldeano/cabeza.cpp"/>
+        <File Name="src/modelos/aldeano/cintura.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="arbol">
+        <File Name="src/modelos/arbol/arbol.cpp"/>
+      </VirtualDirectory>
+      <File Name="src/modelos/retrato.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="obj3dlib">
+      <VirtualDirectory Name="jpeg_reader">
+        <File Name="src/obj3dlib/jpeg_reader/jpg_readwrite.cpp"/>
+        <File Name="src/obj3dlib/jpeg_reader/jpg_memsrc.cpp"/>
+        <File Name="src/obj3dlib/jpeg_reader/jpg_imagen.cpp"/>
+      </VirtualDirectory>
+      <File Name="src/obj3dlib/file_ply_stl.cc"/>
+      <File Name="src/obj3dlib/cubo3d.cc"/>
+      <File Name="src/obj3dlib/tetraedro3d.cc"/>
+      <File Name="src/obj3dlib/luz.cpp"/>
+      <File Name="src/obj3dlib/toro3d.cc"/>
+      <File Name="src/obj3dlib/cono3dwire.cc"/>
+      <File Name="src/obj3dlib/dodecaedro3d.cc"/>
+      <File Name="src/obj3dlib/objeto3d.cc"/>
+      <File Name="src/obj3dlib/esfera3d.cc"/>
+      <File Name="src/obj3dlib/cono3d.cc"/>
+      <File Name="src/obj3dlib/objrevolucion3d.cc"/>
+      <File Name="src/obj3dlib/octaedro3d.cc"/>
+      <File Name="src/obj3dlib/icosaedro3d.cc"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="motorlib">
+      <File Name="src/motorlib/motor_juego.cpp"/>
+      <File Name="src/motorlib/entidad.cpp"/>
+      <File Name="src/motorlib/motor_grafico.cpp"/>
+      <File Name="src/motorlib/mapa.cpp"/>
+      <File Name="src/motorlib/monitor.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="glui">
+      <File Name="src/glui/glui_tree.cpp"/>
+      <File Name="src/glui/glui_panel.cpp"/>
+      <File Name="src/glui/glui_listbox.cpp"/>
+      <File Name="src/glui/glui_checkbox.cpp"/>
+      <File Name="src/glui/glui_button.cpp"/>
+      <File Name="src/glui/glui_statictext.cpp"/>
+      <File Name="src/glui/glui_string.cpp"/>
+      <File Name="src/glui/glui_textbox.cpp"/>
+      <File Name="src/glui/glui.cpp"/>
+      <File Name="src/glui/glui_mouse_iaction.cpp"/>
+      <File Name="src/glui/algebra3.cpp"/>
+      <File Name="src/glui/glui_rotation.cpp"/>
+      <File Name="src/glui/glui_commandline.cpp"/>
+      <File Name="src/glui/glui_radio.cpp"/>
+      <File Name="src/glui/glui_window.cpp"/>
+      <File Name="src/glui/glui_column.cpp"/>
+      <File Name="src/glui/glui_separator.cpp"/>
+      <File Name="src/glui/glui_treepanel.cpp"/>
+      <File Name="src/glui/glui_node.cpp"/>
+      <File Name="src/glui/glui_filebrowser.cpp"/>
+      <File Name="src/glui/glui_edittext.cpp"/>
+      <File Name="src/glui/viewmodel.cpp"/>
+      <File Name="src/glui/glui_bitmap_img_data.cpp"/>
+      <File Name="src/glui/glui_list.cpp"/>
+      <File Name="src/glui/quaternion.cpp"/>
+      <File Name="src/glui/glui_add_controls.cpp"/>
+      <File Name="src/glui/glui_rollout.cpp"/>
+      <File Name="src/glui/glui_control.cpp"/>
+      <File Name="src/glui/arcball.cpp"/>
+      <File Name="src/glui/glui_spinner.cpp"/>
+      <File Name="src/glui/glui_bitmaps.cpp"/>
+      <File Name="src/glui/glui_scrollbar.cpp"/>
+      <File Name="src/glui/glui_translation.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="comportamientos">
+      <File Name="src/comportamientos/puerta.cpp"/>
+      <File Name="src/comportamientos/comportamiento.cpp"/>
+      <File Name="src/comportamientos/objeto.cpp"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <VirtualDirectory Name="CMakeFiles">
+    <VirtualDirectory Name="3.7.2">
+      <VirtualDirectory Name="CompilerIdCXX">
+        <File Name="CMakeFiles/3.7.2/CompilerIdCXX/CMakeCXXCompilerId.cpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="CompilerIdC">
+        <File Name="CMakeFiles/3.7.2/CompilerIdC/CMakeCCompilerId.c"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="FindOpenMP">
+      <File Name="CMakeFiles/FindOpenMP/ompver.cpp"/>
+      <File Name="CMakeFiles/FindOpenMP/ompver.c"/>
+    </VirtualDirectory>
+    <File Name="CMakeFiles/feature_tests.c"/>
+    <File Name="CMakeFiles/feature_tests.cxx"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="include">
+    <VirtualDirectory Name="modelos">
+      <VirtualDirectory Name="perro">
+        <File Name="include/modelos/perro/cabeza.hpp"/>
+        <File Name="include/modelos/perro/perro.hpp"/>
+        <File Name="include/modelos/perro/lomo.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="item">
+        <File Name="include/modelos/item/item.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="jugador">
+        <File Name="include/modelos/jugador/jugador3d.hpp"/>
+        <File Name="include/modelos/jugador/quesito.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="puerta">
+        <File Name="include/modelos/puerta/puerta.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="leo">
+        <File Name="include/modelos/leo/pierna.hpp"/>
+        <File Name="include/modelos/leo/cabeza.hpp"/>
+        <File Name="include/modelos/leo/torso.hpp"/>
+        <File Name="include/modelos/leo/leo.hpp"/>
+        <File Name="include/modelos/leo/cintura.hpp"/>
+        <File Name="include/modelos/leo/brazo.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="aldeano">
+        <File Name="include/modelos/aldeano/pierna.hpp"/>
+        <File Name="include/modelos/aldeano/cabeza.hpp"/>
+        <File Name="include/modelos/aldeano/aldeano.hpp"/>
+        <File Name="include/modelos/aldeano/torso.hpp"/>
+        <File Name="include/modelos/aldeano/cintura.hpp"/>
+        <File Name="include/modelos/aldeano/brazo.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="arbol">
+        <File Name="include/modelos/arbol/arbol.hpp"/>
+      </VirtualDirectory>
+      <File Name="include/modelos/retrato.hpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="obj3dlib">
+      <VirtualDirectory Name="jpeg_reader">
+        <File Name="include/obj3dlib/jpeg_reader/jpg_readwrite.hpp"/>
+        <File Name="include/obj3dlib/jpeg_reader/jpg_jinclude.h"/>
+        <File Name="include/obj3dlib/jpeg_reader/jpg_memsrc.hpp"/>
+        <File Name="include/obj3dlib/jpeg_reader/jpg_imagen.hpp"/>
+      </VirtualDirectory>
+      <File Name="include/obj3dlib/objrevolucion3d.h"/>
+      <File Name="include/obj3dlib/cubo3d.h"/>
+      <File Name="include/obj3dlib/file_ply_stl.h"/>
+      <File Name="include/obj3dlib/esfera3d.h"/>
+      <File Name="include/obj3dlib/toro3d.h"/>
+      <File Name="include/obj3dlib/icosaedro3d.h"/>
+      <File Name="include/obj3dlib/objeto3d.h"/>
+      <File Name="include/obj3dlib/cono3d.h"/>
+      <File Name="include/obj3dlib/cono3dwire.h"/>
+      <File Name="include/obj3dlib/tetraedro3d.h"/>
+      <File Name="include/obj3dlib/vertex.h"/>
+      <File Name="include/obj3dlib/octaedro3d.h"/>
+      <File Name="include/obj3dlib/luz.hpp"/>
+      <File Name="include/obj3dlib/dodecaedro3d.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="motorlib">
+      <File Name="include/motorlib/mapa.hpp"/>
+      <File Name="include/motorlib/monitor.hpp"/>
+      <File Name="include/motorlib/entidad.hpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="glui">
+      <File Name="include/glui/quaternion.h"/>
+      <File Name="include/glui/glui_internal_control.h"/>
+      <File Name="include/glui/glui.h"/>
+      <File Name="include/glui/algebra3.h"/>
+      <File Name="include/glui/glui_internal.h"/>
+      <File Name="include/glui/arcball.h"/>
+      <File Name="include/glui/viewmodel.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="comportamientos">
+      <File Name="include/comportamientos/objeto.hpp"/>
+      <File Name="include/comportamientos/comportamiento.hpp"/>
+      <File Name="include/comportamientos/puerta.hpp"/>
+    </VirtualDirectory>
+    <File Name="include/comportamientolib.hpp"/>
+    <File Name="include/motorlib.hpp"/>
+    <File Name="include/obj3dlib.hpp"/>
+    <File Name="include/modelos_belkan.hpp"/>
+  </VirtualDirectory>
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="Comportamientos_Jugador">
+    <File Name="Comportamientos_Jugador/aldeano.cpp"/>
+    <File Name="Comportamientos_Jugador/aldeano.hpp"/>
+    <File Name="Comportamientos_Jugador/perro.hpp"/>
+    <File Name="Comportamientos_Jugador/perro.cpp"/>
+    <File Name="Comportamientos_Jugador/jugador.hpp"/>
+    <File Name="Comportamientos_Jugador/jugador.cpp"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="bin_src">
+    <File Name="bin_src/juegoSG.cc"/>
+    <File Name="bin_src/juego.cc"/>
+  </VirtualDirectory>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="" Assembler="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g -Wall" C_Options="" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="-O0" Required="yes">
+        <LibraryPath Value="."/>
+        <LibraryPath Value="Debug"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./Belkan" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="./Debug" PauseExecWhenProcTerminates="yes" IsGUIProgram="yes" IsEnabled="yes"/>
+      <BuildSystem Name="CMake"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>

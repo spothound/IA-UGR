@@ -1,0 +1,9 @@
+/home/pinguino/belkan/mega_pulgarcito/CMakeFiles/BelkanSG.dir
+/home/pinguino/belkan/mega_pulgarcito/CMakeFiles/Belkan.dir
+/home/pinguino/belkan/mega_pulgarcito/CMakeFiles/rebuild_cache.dir
+/home/pinguino/belkan/mega_pulgarcito/CMakeFiles/motorLib.dir
+/home/pinguino/belkan/mega_pulgarcito/CMakeFiles/obj3DLib.dir
+/home/pinguino/belkan/mega_pulgarcito/CMakeFiles/edit_cache.dir
+/home/pinguino/belkan/mega_pulgarcito/CMakeFiles/GLUILib.dir
+/home/pinguino/belkan/mega_pulgarcito/CMakeFiles/modelosBelkanLib.dir
+/home/pinguino/belkan/mega_pulgarcito/CMakeFiles/comportamientosLib.dir

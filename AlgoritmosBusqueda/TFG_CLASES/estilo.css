@@ -1,0 +1,312 @@
+body{
+    background:url("img/fondo.png");
+    color: #090963;
+}
+html, body {
+    font: 11pt arial;
+}
+
+h1 {
+    font-size: 150%;
+    margin: 5px 0;
+}
+
+h2 {
+    font-size: 100%;
+    margin: 5px 0;
+}
+
+table.view {
+    width: 90%;
+}
+
+table td {
+    vertical-align: top;
+}
+
+table table {
+    background-color: #f5f5f5;
+    border: 1px solid #e5e5e5;
+}
+
+table table td {
+    vertical-align: middle;
+}
+
+input[type=text], pre {
+    border: 1px solid lightgray;
+}
+
+pre {
+    margin: 0;
+    padding: 5px;
+    font-size: 10pt;
+}
+
+.network_box {
+    width: 100%;
+    height: 400px;
+    border: 1px solid lightgray;
+}
+
+.info_color_ini{color:red;}
+.info_color_fin{color:green;}
+
+
+#network-form-div{
+	/*float:left;*/
+	width: 90%;
+	background-color: lightgray;
+	border:5px solid;
+	/*margin-right:2px;*/
+    margin:auto;
+	overflow: hidden;
+}
+
+#network-form-div:after{
+    content:"";
+    clear: both;
+    display: block;
+}
+
+#import-network-div{
+	/*float:left;*/
+	width: 90%;
+	background-color: lightgray;
+	border:5px solid;
+	/*margin-left: 2px;*/
+	clear: both;
+    margin:auto;
+}
+
+#principal:after{
+	content:"";
+	clear:both;
+	display: block;
+}
+
+#textarea-explanation,#textarea-openclosed{
+    width: 100%;
+    resize: none;
+}
+
+#network-form-div-node,#network-form-div-edge{
+	width: 50%; 
+	float: left;
+	padding-bottom: 100%;
+	margin-bottom: -100%;
+	border:1px dashed;
+}
+
+#network-form-div-edge{
+	width: 45%; 
+	float: right;
+	padding-bottom: 100%;
+	margin-bottom: -100%;
+}
+
+
+#col-network-data{width: 25%;}
+#col-network-draw{width: 75%;}
+#col-network-actual-estate{width: 60%;}
+#col-network-select-algoritm{width: 40%;}
+#col-network-control-buttons{width: 40%;}
+
+#footer{
+    position: fixed;
+    bottom:0;
+    left:0;
+    display: inline-block;
+    text-align: center;
+    background-color: #090963;
+    width: 100%;
+    color:white;
+    padding: 10px 0;
+}
+
+.network_box{
+	background-color: white;
+}
+
+#rest-of-data-div{
+    background-color: white;
+}
+
+
+nav{
+    position: absolute;
+    top:0;
+    left:0;
+    display: inline-block;
+    text-align: center;
+    background-color: #090963;
+    width: 100%;
+    color:white;
+    padding: 10px 0;
+    clear:both;
+    padding: 0;
+}
+
+/*nav li{
+    background-color: red;
+    list-style: none;
+    float:left;
+    cursor: pointer;
+    margin: auto;
+    padding: 5px;
+
+}
+
+
+nav li:hover{
+    background-color: green;
+    padding:15px;
+    margin:auto;
+}*/
+nav ul{
+    width: 50%;
+    padding: 0;
+    float:left;
+    margin: auto 0;
+}
+
+nav ul:after{
+    content: "";
+    clear: both;
+    display: block;
+}
+
+nav ul li{
+    list-style: none;
+    float:left;
+    margin: 5px;
+    background-color: #090963;
+    text-align: center;
+    padding: 10px;
+    color:white;
+    font-weight: bold;
+    border: solid 1px;
+    border-color: #090963;
+}
+
+nav ul li:after{
+    content: "";
+    clear: both;
+    display: block;
+
+}
+
+nav ul li a{
+    text-decoration: none;
+    color:inherit;
+    padding: inherit;
+    margin: 0;
+    cursor: pointer;
+}
+
+nav:after{
+    content:"";
+    clear:both;
+    display: block;
+}
+
+nav ul li:hover{
+    list-style: none;
+    float:left;
+    margin: 5px;
+    background-color: #FFD700;
+    border: solid 1px;
+    border-color: #A52A2A;
+    text-align: center;
+    padding: 10px;
+    color:#A52A2A;
+}
+
+nav a{float:right;margin:0 10px;}
+
+header nav ul:after{
+    content:"";
+    clear: both;
+    display: block;
+}
+
+/* ESTILO DEL SUBMENU */
+
+nav #submenu{
+    display: inline-block;
+    background-color: #33caff;
+    width: 100%;
+    color:white;
+    margin:0;
+}
+
+
+
+nav #submenu ul{
+    width: 50%;
+    padding: 0;
+    float:left;
+    margin: auto 0;
+}
+
+nav #submenu ul:after{
+    content: "";
+    clear: both;
+    display: block;
+}
+
+nav #submenu ul li{
+    list-style: none;
+    float:left;
+    background-color:  green;
+    text-align: center;
+    color:white;
+    font-weight: bold;
+    border: solid 1px;
+    border-color: #090963;
+    padding: 5px;
+    cursor: pointer;
+}
+
+nav #submenu ul li:after{
+    content: "";
+    clear: both;
+    display: block;
+
+}
+
+nav #submenu ul li a{
+    text-decoration: none;
+    color:inherit;
+    margin: 0;
+    cursor: pointer;
+    padding:0;
+    font-weight: lighter;
+}
+
+nav #submenu :after{
+    content:"";
+    clear:both;
+    display: block;
+}
+
+nav #submenu ul li:hover{
+    list-style: none;
+    float:left;
+    margin: 5px;
+    background-color: #FFD700;
+    border: solid 1px;
+    border-color: #A52A2A;
+    text-align: center;
+    padding: 5px;
+    color:#A52A2A;
+}
+
+nav #submenu a{float:right;margin:0 10px;}
+
+header nav #submenu ul:after{
+    content:"";
+    clear: both;
+    display: block;
+}
+

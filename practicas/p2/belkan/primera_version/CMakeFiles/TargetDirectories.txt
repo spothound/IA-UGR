@@ -1,0 +1,9 @@
+/home/pinguino/UGR/SEGUNDO/2/IA/practicas/p2/Practica2Ubuntu/CMakeFiles/BelkanSG.dir
+/home/pinguino/UGR/SEGUNDO/2/IA/practicas/p2/Practica2Ubuntu/CMakeFiles/Belkan.dir
+/home/pinguino/UGR/SEGUNDO/2/IA/practicas/p2/Practica2Ubuntu/CMakeFiles/rebuild_cache.dir
+/home/pinguino/UGR/SEGUNDO/2/IA/practicas/p2/Practica2Ubuntu/CMakeFiles/motorLib.dir
+/home/pinguino/UGR/SEGUNDO/2/IA/practicas/p2/Practica2Ubuntu/CMakeFiles/obj3DLib.dir
+/home/pinguino/UGR/SEGUNDO/2/IA/practicas/p2/Practica2Ubuntu/CMakeFiles/edit_cache.dir
+/home/pinguino/UGR/SEGUNDO/2/IA/practicas/p2/Practica2Ubuntu/CMakeFiles/GLUILib.dir
+/home/pinguino/UGR/SEGUNDO/2/IA/practicas/p2/Practica2Ubuntu/CMakeFiles/modelosBelkanLib.dir
+/home/pinguino/UGR/SEGUNDO/2/IA/practicas/p2/Practica2Ubuntu/CMakeFiles/comportamientosLib.dir

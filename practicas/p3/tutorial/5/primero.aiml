@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+
+<!-- regla 1 -->
+<category>
+<pattern>Hola *</pattern>
+<template>Hola, que tal?</template>
+</category>
+
+<!-- regla 2 -->
+<category>
+<pattern>^ que tal tu</pattern>
+<template>Estoy genial!!!</template>
+</category>
+
+<!-- regla 3 -->
+<category>
+<pattern> ^ me llamo *</pattern>
+<template>
+    <set name="nombre"><star index="2"/></set>
+    <get name="nombre"/> es un bonito nombre.
+</template>
+</category>
+
+<!-- regla 4 -->
+<category>
+<pattern>Hola</pattern>
+<template>Hola de nuevo, que tal?</template>
+</category>
+
+<!-- regla 5 -->
+<category>
+<pattern>Cual es tu edad</pattern>
+<template>Tengo <bot name="age"/> anios</template>
+</category>
+
+<!-- regla 6 -->
+<category>
+<pattern>Cual es mi nombre</pattern>
+<template>Tu nombre es <get name="nombre"/></template>
+</category>
+
+<!-- regla 7 -->
+<category>
+<pattern>mi color favorito es el *</pattern>
+<template>
+    <think><set var="color"><star/></set></think>
+    El <get var="color"/> es un color que no me gusta.
+</template>
+</category>
+
+</aiml>

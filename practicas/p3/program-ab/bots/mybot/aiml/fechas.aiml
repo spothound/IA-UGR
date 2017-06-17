@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+    <category>
+        <pattern>
+            validafecha <set>dias</set> del <set>meses</set> de <set>años</set>
+        </pattern>
+        <template>
+            <think>
+		<set var="dia"><star/></set>
+		<set var="mes"><star index = "2"/></set>
+		<set var="anno"><star index = "3"/></set>
+	    </think>
+	    <condition var="mes">
+		<li value = "04"><condition var="dia"><li value = "31">NO</li><li>YES</li></condition></li>
+		<li value = "06"><condition var="dia"><li value = "31">NO</li><li>YES</li></condition></li>
+		<li value = "09"><condition var="dia"><li value = "31">NO</li><li>YES</li></condition></li>
+		<li value = "11"><condition var="dia"><li value = "31">NO</li><li>YES</li></condition></li>
+		<li value = "02">
+		    <condition var="dia">
+			<li value = "31">NO</li>
+			<li value = "30">NO</li>
+			<li value = "29">
+			    <condition var="anno">
+				<li value = "2020">YES</li>
+				<li value = "2024">YES</li>
+				<li>NO</li>
+			    </condition>
+			</li>
+			<li>YES</li>
+		    </condition>
+		</li>
+		<li>YES</li>
+	    </condition>
+        </template>
+    </category>
+
+    <category>
+        <pattern>_mañana * </pattern>
+        <template><srai>tomorrow <srai> selectitem 1 in <star/></srai> <srai> selectitem 3 in <star/></srai> <srai> selectitem 5 in <star/></srai> </srai></template>
+    </category>
+
+    <category>
+        <pattern>
+            validafecha <set>dias</set> del * de <set>años</set>
+        </pattern>
+        <template>
+            no es un mes válido.
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            validafecha <set>dias</set> del <set>meses</set> de *
+        </pattern>
+        <template>
+            no es un año válido (solo entre 2000 y 2099)
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            validafecha * del * de *
+        </pattern>
+        <template>
+            Esa no es una fecha válida.
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            validafecha * del <set>meses</set> de <set>años</set>
+        </pattern>
+        <template>
+            no es un dia válido.
+        </template>
+    </category>
+
+    <category>
+        <pattern>_fecha *</pattern>
+        <template>
+            <think>
+                <set var="caracteres">
+                     <srai>deletrea <star/></srai>
+                </set>
+                <set var="caracteres"><srai> quitarpercent <srai>quitarespacios <srai>insertitem % pos 8 in <srai>deletrea <get var="caracteres"/></srai></srai></srai></srai></set>
+            </think>
+            <srai>arreglahora <srai> remain <get var="caracteres"/></srai></srai> del <srai>fecha <srai> top <get var="caracteres"/></srai></srai>
+        </template>
+    </category>
+
+
+    <category>
+        <pattern>fecha *</pattern>
+        <template>
+            <think>
+                <set var="caracteres">
+                    <srai>deletrea <star/></srai>
+                </set>
+                <set var="dia"><srai>top <get var="caracteres"/></srai></set>
+                <set var="caracteres"><srai>remain <get var="caracteres"/></srai></set>
+                <set var="dia"><srai>quitarespacios <srai>additem <get var="dia"/> in <srai>top <get var="caracteres"/></srai></srai></srai></set>
+                <condition var="dia">
+                    <li value="1">
+                        <set var="dia">11</set>
+                    </li>
+                </condition>
+                <set var="caracteres"><srai>remain <srai>remain <get var="caracteres"/></srai></srai></set>
+                <set var="mes"><srai>top <get var="caracteres"/></srai></set>
+                <set var="caracteres"><srai>remain <get var="caracteres"/></srai></set>
+                <set var="mes"><srai>quitarespacios <srai>additem <get var="mes"/> in <srai>top <get var="caracteres"/></srai></srai></srai></set>
+                <condition var="mes">
+                    <li value="1">
+                        <set var="mes">11</set>
+                    </li>
+                </condition>
+
+                <set var="año"><srai>quitarespacios <srai> remain <srai>remain <get var="caracteres"/></srai></srai></srai></set>
+            </think>
+            <get var="dia"/> del <get var="mes"/> de <get var="año"/>
+        </template>
+    </category>
+
+    <category>
+        <pattern>validar *</pattern>
+        <template>
+            <think><set name="x"><star/></set>
+            <condition name="x">
+                <li value="hoy">
+                    <set name="x"><date jformat="dd/MM/yyyy"/></set>
+                </li>
+                <li value="mañana">
+                        <set name="mañanaa"><srai>_mañana <srai>fecha <date jformat="dd/MM/yyyy"/></srai></srai></set>
+                        <set name="x"><get name="mañanaa"/></set>
+
+                </li>
+            </condition>
+            </think>
+            <srai>validafecha <srai>fecha <get name="x"/></srai></srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>arreglahora *</pattern>
+        <template>
+            <srai>quitarespacios
+            <srai>insertitem : POS 2 in
+            <srai>deletrea <star/></srai>
+            </srai>
+            </srai>
+        </template>
+    </category>
+
+</aiml>

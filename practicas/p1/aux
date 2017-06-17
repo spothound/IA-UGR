@@ -1,0 +1,390 @@
+#include "../Comportamientos_Jugador/jugador.hpp"
+#include <iostream>
+#include<utility>
+#include<time.h>
+using namespace std;
+
+bool direccion(){
+    if(rand()%2 == 0)
+        return true ;
+    else
+        false ;
+}
+
+char ComportamientoJugador::Necesito(char terreno){
+    switch(terreno){
+    case('A'):
+        return '1';
+        break;
+    case('B'):
+        return '2';
+        break;
+    }
+    return '@' ;
+}
+
+bool ComportamientoJugador::PuedoPisar(char c){
+    bool ret = true ;
+    switch(c){
+    case 'B':
+        if(!lotengo[2])
+            ret = false ;
+        break;
+    case 'A':
+        if(!lotengo[1])
+            ret = false ;
+        break;
+    case 'D':
+        if(!lotengo[3])
+            ret = false ;
+        break;
+    case 'P':
+    case 'M':
+    case '?':
+        ret = false ;
+        break ;
+    }
+    return ret ;
+
+}
+
+void ComportamientoJugador::giro(){
+    if(rand()%2==0)
+        accion = actTURN_R ;
+    else
+        accion = actTURN_L ;
+}
+
+void ComportamientoJugador::giro(bool izquierda){
+    if(izquierda)
+        accion = actTURN_L ;
+    else
+        accion = actTURN_R ;
+}
+
+
+void ComportamientoJugador::Reinicio(){
+    situado = false ;
+    fil = col = 99 ;
+    for(int i = 0 ; i < 200 ; i++)
+        for(int j = 0 ; j < 200 ; j++)
+            memoriaAUX[i][j] = 0 ;
+    for(int i = 0 ; i < 4 ; i++){
+        lotengo[i] = false ;
+    }
+    brujula = 0 ;
+    moribundo = false ;
+    ultimaAccion = actIDLE ;
+}
+
+Action ComportamientoJugador::think(Sensores sensores){
+
+    //if(primera){
+    //    for(int i = 0 ; i < 100 ; i++)
+    //        for(int j = 0 ; j < 100 ; j++)
+    //            mapaResultado[i][j] = 'T' ;
+    //    primera = false ;
+    //}
+
+    if(sensores.reset)
+        Reinicio() ;
+
+    cout << "Terreno: ";
+    for (int i=0; i<sensores.terreno.size(); i++)
+        cout << sensores.terreno[i];
+    cout << endl;
+
+    cout << "Superficie: ";
+    for (int i=0; i<sensores.superficie.size(); i++)
+        cout << sensores.superficie[i];
+    cout << endl;
+
+    cout << "Colisión: " << sensores.colision << endl;
+    cout << "Mochila: " << sensores.mochila << endl;
+    cout << "Reset: " << sensores.reset << endl;
+    cout << "Vida: " << sensores.vida << endl;
+    cout << "Fila: " << sensores.mensajeF << endl;
+    cout << "Columna: " << sensores.mensajeC << endl;
+    cout << "objetoActivo: " << sensores.objetoActivo << endl;
+
+    switch(ultimaAccion){
+    case actFORWARD:
+        if(!sensores.colision){
+            switch(brujula){
+            case 0: // NORTE
+                fil-- ;
+                break ;
+            case 1: //ESTE
+                col++ ;
+                break ;
+            case 2: //SUR
+                fil++ ;
+                break ;
+            case 3: //OESTE
+                col-- ;
+                break ;
+            }
+        }
+        break ;
+    case actTURN_L:
+        brujula = (brujula+3)%4 ;
+        break ;
+    case actTURN_R:
+        brujula = (brujula+1)%4 ;
+        break ;
+    }
+    if(sensores.terreno[0]=='K' && !situado){
+        int filaux = fil ;
+        int colaux = col ;
+        fil = sensores.mensajeF ;
+        col = sensores.mensajeC ;
+        int fff = filaux - fil;
+        int ccc = colaux - col;
+        situado = true ;
+        for(int i = 0 ; i < 100 ; i++)
+            for(int j = 0 ; j < 100 ; j++){
+                if(mapaResultado[i][j] == '?')
+                    mapaResultado[i][j] = mapaAUX[i+fff][j+ccc];
+                if(memoria[i][j] == 0)
+                    memoria[i][j] = memoriaAUX[i+fff][j+ccc];
+            }
+    }
+
+    if(situado){
+        mapaResultado[fil][col] = sensores.terreno[0] ;
+    }else{mapaAUX[fil][col] = sensores.terreno[0] ;}
+    int contador = 1 ;
+    int a,b,c,d,f; // a y b fila o columna e suma o resta filas.
+    a = 0 ;        // c y d suma/resta columnas.
+    b = 1 ;
+    c = 1 ;
+    f = 1 ;
+    if(brujula%2 == 0){
+        a = 1 ;
+        b = 0 ;
+    }
+    if(brujula%3 == 0)
+        c = -1 ;
+    if(brujula>1)
+        f = -1 ;
+    for(int i = 1 ; i <= 3 ; i++){
+        for(int j = 0-(f*i) ; j != 0+(f*i)+f ; j+= f){
+            int fi = fil+ c*i*a + j*b ;
+            int co = col+ j*a + c*i*b ;
+            if(situado)
+                mapaResultado[fi][co] = sensores.terreno[contador] ;
+            else
+                mapaAUX[fi][co] = sensores.terreno[contador] ;
+            contador++ ;
+        }
+    }
+    ///////////////// MI CÓDIGO EMPIEZA AQUÍ /////////////////////////
+
+    /*
+      for(int i = fil-3 ; i <= fil+3  ; i++){
+      for(int j = col-3 ; j <= col+3 ; j++){
+      if(situado)
+      cout  << " [" << memoria[i][j] << "] ";
+      else
+      cout << " [" << memoriaAUX[i][j] << "] ";;
+      }
+      cout << endl ;
+      }*/
+
+    accion = actFORWARD ;
+    cout << "voy a avanzar\n" ;
+    count++;
+    if(situado){
+        memoria[fil][col] = count ;
+    }
+    else{
+        memoriaAUX[fil][col] = count ;
+    }
+    if(count%pasos==0){
+        cout << "mejor giro [1]\n" ;
+        if(rand()%2 == 0)
+            giro(izquierda) ;
+        else giro(!izquierda) ;
+    }
+    char sup = sensores.superficie[2] ;
+    char miObj = sensores.objetoActivo ;
+    bool tengo ;
+    switch(sup){
+    case '0':
+    case '1':
+    case '2':
+    case '3':
+        tengo = lotengo[sup-'0'] ;
+            if(tengo){
+                if(miObj == sup){
+                    accion = actTHROW;
+                    lotengo[sup-'0'] = false;
+                }
+                else if(miObj != '_')
+                    accion = actPUSH;
+                else
+                    accion = actPOP;
+            }else if(miObj == '_'){
+                accion = actPICKUP ;
+                cout << "voy a coger este objeto\n" ;
+                lotengo[sup-'0'] = true ;
+            }else{
+                accion = actPUSH ;
+                cout << "voy a guardar mi objeto en la mochila\n [1]";
+            }
+        break;
+    case 'a':
+    case 'l':
+        giro(izquierda);
+        if(izquierda)
+            izquierda = false ;
+        break;
+    }
+
+    if(accion == actFORWARD){
+        char frente = sensores.terreno[2] ;
+        char objeto ;
+        bool especial = false ;
+        if(PuedoPisar(frente)){
+            switch(frente){
+            case 'B':
+                objeto = '2' ;
+                especial = true ;
+                break ;
+            case 'A':
+                objeto = '1' ;
+                especial = true ;
+                break ;
+            case 'D':
+                objeto = '3' ;
+                if(sensores.objetoActivo == 3)
+                    accion = actGIVE;
+                especial = true ;
+                break ;
+            }
+            if(especial)
+                if(sensores.objetoActivo != objeto){
+                    if(sensores.objetoActivo != '_'){
+                        accion = actPUSH ;
+                        cout << "voy a guardar mi objeto en la mochila\n [2]";
+                    }else{
+                        accion = actPOP ;
+                        cout << "voy a coger un objeto de la mochila\n";
+                    }
+                }
+        }else {
+            giro(izquierda);
+            if(izquierda)
+                izquierda = false ;
+            cout << "giro porque no puedo pisar\n" ;
+        }
+    }
+    if(accion == actFORWARD){
+        int f,c;
+        f = c = 0 ;
+        switch(brujula){
+        case(0):
+            f = -1 ;
+            break ;
+        case(1):
+            c = 1 ;
+            break ;
+        case(2):
+            f = 1 ;
+            break ;
+        case(3):
+            c = -1 ;
+            break ;
+        }
+        int delante, izquierda, derecha ;
+        if(situado){
+            delante = memoria[fil+f][col+c];
+            izquierda = memoria[fil-c][col+f];
+            derecha = memoria[fil+c][col-f];
+        }else{
+            delante = memoriaAUX[fil+f][col+c];
+            izquierda = memoriaAUX[fil-c][col+f];
+            derecha = memoriaAUX[fil+c][col-f];
+        }
+
+        if(lotengo[3] and (situado and mapaResultado[fil+c][col-f]=='D')or
+           !situado and mapaAUX[fil+c][col-f]=='D')
+            giro(false);
+
+        if(lotengo[3] and (situado and mapaResultado[fil-c][col+f]=='D')or
+           !situado and mapaAUX[fil-c][col+f]=='D')
+            giro(true);
+        cout << "\ndelante: " << delante
+             << "\nizquierda: " << izquierda
+             << "\nderecha: " << derecha ;
+        cout << flush;
+        if(accion == actFORWARD){
+            if(izquierda <= derecha){
+                if(izquierda < delante and
+                   ((situado and mapaResultado[fil-c][col+f] != '?' and
+                     PuedoPisar(mapaResultado[fil-c][col+f])) or !situado
+                    and mapaAUX[fil-c][col+f] != '?' and
+                    PuedoPisar(mapaAUX[fil-c][col+f]))){
+                    giro(true) ;
+                    cout << "giro a la izquierda porque he pisado\n" ;
+                }else{cout << "\njoder" ; }
+            }else if(derecha < delante
+                     and ((situado and
+                           mapaResultado[fil+c][col-f] != '?'
+                           and PuedoPisar(mapaResultado[fil+c][col-f]))
+                          or (!situado and mapaAUX[fil+c][col-f] != '?' and
+                              PuedoPisar(mapaAUX[fil+c][col-f])))) {
+                giro(false);
+                cout << "giro a la derecha porque he pisado\n ";
+            } else { cout << "\nfuck you" ; }
+        }
+    }
+
+    if(accion == actTHROW or accion == actPUSH)
+        if(miObj != Necesito(sensores.terreno[0]))
+            giro(true) ;
+
+    /*
+      char ch ;
+      cin >> ch ;
+      switch(ch){
+      case('w'):
+      accion = actFORWARD;
+      break;
+      case('a'):
+      accion = actTURN_L;
+      break;
+      case('d'):
+      accion = actTURN_R;
+      break;
+      case('q'):
+      accion = actPUSH;
+      break;
+      case('e'):
+      accion = actPOP;
+      break;
+      case('z'):
+      accion = actPICKUP;
+      break;
+      case('x'):
+      accion = actPUTDOWN;
+      break;
+      case('c'):
+      accion = actGIVE;
+      break;
+      case('f'):
+      accion = actTHROW;
+      break;
+      }
+    */
+
+    if(sensores.terreno[2]=='D' and sensores.objetoActivo == '3')
+        accion = actGIVE;
+    ultimaAccion = accion ;
+
+    return accion;
+}
+//
+int ComportamientoJugador::interact(Action accion, int valor){
+    return false;
+}

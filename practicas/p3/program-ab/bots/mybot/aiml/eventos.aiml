@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+
+    <category>
+        <pattern>^ [establec+ agrega+ añad+ guarda+] ^ [encuentr+ asunto+ evento+ cita+] ^ </pattern>
+        <template>dime un nombre para el evento
+        <think>
+            <set name="topic">eventos</set>
+        </think>
+
+        </template>
+    </category>
+
+    <category>
+        <pattern>^ gracias ^ </pattern>
+        <template> de nada </template>
+    </category>
+
+
+    <!-- TOPIC, EVENTOS -->
+    <topic name="eventos">
+        <category>
+            <pattern>^ [añadir establecer guardar] ^ (otro) (uno mas) ^ (nuevo) ^</pattern>
+            <template>dime un nombre para el evento
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <that>dime un nombre para el evento</that>
+            <template>
+                <think>
+                    <set name="nombre_e"> <star/></set>
+                </think>
+                dime la fecha del evento
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <that>dime la fecha del evento</that>
+            <template>
+                <think>
+                    <set name="x"><star/></set>
+                <set name="valida"><srai>validar <star/></srai></set></think>
+                <condition name="valida">
+                    <li value="YES">
+                        <think>
+                        <set name="fecha">  <srai>quitarespacios <srai>REMOVEITEM 3 IN <srai> DELETREA <get name="x"/> </srai></srai></srai></set>
+                        <set name="fecha">  <srai>quitarespacios <srai>REMOVEITEM 5 IN <srai> DELETREA <get name="fecha"/> </srai></srai></srai></set>
+                        </think>
+                        dime la hora del evento
+                    </li>
+                    <li value="NO">Esa fecha no es valida</li>
+                    <li><get name="valida"/></li>
+                </condition>
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <that>dime la hora del evento</that>
+            <template>esta no es una hora válida, lo siento</template>
+        </category>
+
+        <category>
+            <pattern><set>horas</set></pattern>
+            <that>dime la hora del evento </that>
+            <template>
+                <think>
+                    <set name="hora">
+                    <srai>quitarespacios <srai>REMOVEITEM 3 IN <srai>deletrea <star/></srai></srai></srai></set>
+                    <set name="clave">
+                        <srai> quitarespacios <srai>ADDITEM <get name="fecha"/> IN <get name="hora"/></srai></srai>
+                    </set>
+
+                    <set name="var"><map name="evername"><get name="clave"/></map></set>
+                </think>
+                <condition name="var">
+                    <li value="unknown">
+                        <think>
+                            <addtomap>
+                                <name>evername</name>
+                                <key><get name="clave"/></key>
+                                <value><get name="nombre_e"/></value>
+                            </addtomap>
+                            <set name="topic">asociar_contactos</set>
+                        </think>
+                        quieres asociar un contacto al evento?
+                    </li>
+                    <li>
+                        No es posible agregar el evento, tienes otro evento que se solapa
+                    </li>
+                </condition>
+                <think>
+                    <set name="var1"><map name="eventos"><get name="fecha"/></map></set>
+                    <condition name="var1">
+                        <li value="unknown">
+                            <set name="valor">
+                                <get name="hora"/>
+                            </set>
+                            <addtomap>
+                                <name>eventos</name>
+                                <key><get name="fecha"/></key>
+                                <value><get name="valor"/></value>
+                            </addtomap>
+                        </li>
+                        <li>
+                            <set name="valor">
+                                <srai>additem <get name="hora"/> in <get name="var1"/></srai>
+                            </set>
+                            <modifymap>
+                                <name>eventos</name>
+                                <key><get name="fecha"/></key>
+                                <value><get name="valor"/></value>
+                            </modifymap>
+                        </li>
+                    </condition>
+                </think>
+            </template>
+        </category>
+
+
+
+    </topic>
+
+    <topic name="asociar_contactos">
+
+        <category>
+            <pattern>^ [si claro vale] ^</pattern>
+            <that>QUIERES ASOCIAR UN CONTACTO AL EVENTO?</that>
+            <template>Dime un contacto a asociar</template>
+        </category>
+
+
+        <category>
+            <pattern>no</pattern>
+            <template>Vale, he agregado el nuevo evento.
+            <think><set name="topic">default</set></think>
+            </template>
+        </category>
+        <category>
+            <pattern>si</pattern>
+            <template>vale, dime el contacto</template>
+        </category>
+
+
+        <category>
+            <pattern>*</pattern>
+            <template><srai>CONTACTO <srai>ponerbarrabaja <star/></srai></srai></template>
+        </category>
+
+        <category>
+            <pattern>CONTACTO *</pattern>
+            <template>No tienes agregado ningún contacto con ese apellido. ¿Quieres seguir añadiendo contactos?</template>
+        </category>
+
+        <category>
+            <pattern>CONTACTO <set>apellidos</set></pattern>
+            <template>Asocio el contacto, quieres asociar otro contacto?
+            <think>
+                <set name="clave">
+                    <srai>quitarespacios <srai>ADDITEM <get name="fecha"/> IN <get name="hora"/></srai>
+                </srai></set>
+
+                <set name="var"><map name="evper"><get name="clave"/></map></set>
+                <condition name="var">
+                    <li value="unknown">
+                        <addtomap>
+                            <name>evper</name>
+                            <key><get name="clave"/></key>
+                            <value><star/></value>
+                        </addtomap>
+                    </li>
+                    <li>
+                        <modifymap>
+                            <name>evper</name>
+                            <key><get name="clave"/></key>
+                            <value><srai>ADDITEM <star/> IN <get name="var"/></srai></value>
+                        </modifymap>
+                    </li>
+                </condition>
+            </think>
+            </template>
+        </category>
+    </topic>
+
+
+    <category>
+        <pattern>GET_FECHAHORA</pattern>
+        <template>
+            <srai>ponerbarrabaja <srai>INSERTITEM <get name="hora"/> POS 2 IN <get name="fecha"/></srai></srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern> ^ (dime) que ^ [event+ cita+ asunto+ hacer] ^ el (dia) * </pattern>
+        <template><srai>_que eventos tengo el <star index="4"/> </srai>
+
+        </template>
+    </category>
+
+    <category>
+        <pattern> ^ (dime) que ^ [event+ cita+ asunto+ hacer] ^  hoy </pattern>
+        <template><srai>_que eventos tengo el hoy </srai>
+
+        </template>
+    </category>
+
+    <category>
+        <pattern> ^ (dime) que ^ [event+ cita+ asunto+ hacer] ^  mañana </pattern>
+        <template><srai>_que eventos tengo el mañana </srai>
+
+        </template>
+    </category>
+
+    <category>
+        <pattern>_QUE EVENTOS TENGO EL *</pattern>
+        <template>
+            <think>
+                <set name="x"><star/></set>
+            <set name="valida"><srai>validar <get name="x"/></srai></set></think>
+            <condition name="valida">
+                <li value="YES">
+                    <think>
+                        <set name="fecha">  <srai>quitarespacios <srai>REMOVEITEM 3 IN <srai> DELETREA <get name="x"/> </srai></srai></srai></set>
+                        <set name="fecha">  <srai>quitarespacios <srai>REMOVEITEM 5 IN <srai> DELETREA <get name="fecha"/> </srai></srai></srai></set>
+                        <set name="horas"><map name="eventos"><get name="fecha"/></map>
+                        </set>
+                        <set name="iterator"><get name="horas"/></set>
+                        <set name="resultado"> </set>
+                    </think>
+                    <condition name="horas">
+                        <li value="unknown">no tienes eventos ese dia</li>
+                        <li>
+                            <condition name="iterator">
+                                <li value="$"></li>
+                                <li>
+                                    <think>
+                                        <set name="unahora"><srai>iterate <get name="iterator"/></srai></set>
+                                        <set name="clave">
+                                            <srai> quitarespacios
+                                            <srai>ADDITEM <get name="fecha"/> IN <get name="unahora"/>
+                                            </srai>
+                                            </srai>
+                                        </set>
+                                        <set name="resultado"> <map name="evername"><get name="clave"/></map> - <get name="resultado"/></set>
+                                    </think>
+                                    <loop/>
+                                </li>
+                            </condition>
+                            tienes: - <get name="resultado"/>
+                        </li>
+                    </condition>
+                    </li>
+                    <li value="NO">Esa fecha no es valida</li>
+                    <li><get name="valida"/></li>
+                </condition>
+        </template>
+    </category>
+
+    <category>
+        <pattern> ^ modific+ ^ [event+ cita asunto encuentro] ^ </pattern>
+        <template><srai>MODIFICA_EVENTO</srai></template>
+    </category>
+
+    <category>
+        <pattern>MODIFICA_EVENTO</pattern>
+        <template>que fecha tiene el evento que quieres modificar?
+        <think><set name="topic">modificar_evento</set></think>
+        </template>
+    </category>
+
+<!-- TOPIC, MODIFICAR EVENTOS -->
+<topic name="modificar_evento">
+    <category>
+        <pattern>*</pattern>
+        <that>A QUE HORA ES EL EVENTO</that>
+        <template>Esa no es una hora válida...</template>
+    </category>
+    <category>
+        <pattern><set>horas</set></pattern>
+        <that>A QUE HORA ES EL EVENTO</that>
+        <template>
+        <think>
+            <set name="hora"><srai>quitarpuntos <star/></srai></set>
+            <set name="clave"><srai>quitarespacios <srai> additem <get name="fecha"/> in <get name="hora"/></srai></srai></set>
+            <set name="var"><map name="evername"><get name="clave"/></map></set>
+        </think>
+            <condition name="var">
+                <li value="unknown">No tienes eventos a esa hora ese dia</li>
+                <li>Que desea modificar? El titulo, la hora o un contacto asociado?</li>
+            </condition>
+        </template>
+    </category>
+
+    <category>
+        <pattern>*</pattern>
+        <that>QUE FECHA TIENE EL EVENTO QUE QUIERES MODIFICAR</that>
+        <template>a que hora es el evento?
+        <think>
+            <set name="fecha"><srai>quitarbarral <star/></srai></set>
+        </think>
+        </template>
+    </category>
+
+    <category>
+        <pattern>^ contacto+ ^</pattern>
+        <template>quieres añadir o borrar contactos?</template>
+    </category>
+
+    <category>
+        <pattern>^ añadir ^</pattern>
+        <that>quieres añadir o borrar contactos</that>
+        <template>Dime un contacto a asociar
+        <think><set name="topic">asociar_contactos</set></think>
+        </template>
+    </category>
+    <category>
+        <pattern>^ borrar ^</pattern>
+        <that>quieres añadir o borrar contactos</that>
+        <template>dime contacto a borrar</template>
+    </category>
+
+
+
+    <category>
+        <pattern>*</pattern>
+        <that>dime contacto a borrar</that>
+        <template>contacto borrado.
+        <think>
+            <set name="num"><srai>finditem <star/> in <map name="evper"><get name="clave"/></map></srai></set>
+            <modifymap>
+                <name>evper</name>
+                <key><get name="clave"/></key>
+                <value><srai>removeitem <get name="num"/> in <map name="evper"><get name="clave"/></map></srai></value>
+            </modifymap>
+
+        </think>
+        </template>
+    </category>
+
+    <category>
+        <pattern>^ titulo ^</pattern>
+        <template>nuevo titulo?</template>
+    </category>
+
+    <category>
+        <pattern>*</pattern>
+        <that>NUEVO TITULO</that>
+        <template>titulo modificado
+        <think>
+            <modifymap>
+                <name>evername</name>
+                <key><get name="clave"/></key>
+                <value><star/></value>
+                </modifymap>
+        </think>
+        </template>
+    </category>
+
+
+    <category>
+        <pattern>^ hora ^</pattern>
+        <template>nueva hora?</template>
+    </category>
+
+    <category>
+        <pattern>*</pattern>
+        <that>NUEVA HORA</that>
+        <template>eso no es una hora o no es una hora válida</template>
+    </category>
+    <category>
+        <pattern><set>horas</set></pattern>
+        <that>NUEVA HORA</that>
+        <template>
+        <think>
+            <set name="nueva_hora"><srai>quitarpuntos <star/></srai></set>
+            <set name="nueva_clave">
+            <srai>quitarespacios <srai>additem <get name="fecha"/> in <get name="nueva_hora"/></srai></srai></set>
+            <set name="contenido"><map name="evername"><get name="nueva_clave"/></map></set>
+        </think>
+            <condition name="contenido">
+                <li value="unknown">
+
+                    <think>
+                        <addtomap>
+                            <name>evername</name>
+                            <key><get name="nueva_clave"/></key>
+                            <value><map name="evername"><get name="clave"/></map></value>
+                        </addtomap>
+                        <removefrommap>
+                            <name>evper</name>
+                            <key><get name="clave"></get></key>
+                        </removefrommap>
+
+                            <removefrommap>
+                            <name>evername</name>
+                            <key><get name="clave"></get></key>
+                        </removefrommap>
+                        <addtomap>
+                            <name>evper</name>
+                            <key><get name="nueva_clave"/></key>
+                            <value><map name="evper"><get name="clave"/></map></value>
+                            </addtomap>
+                        <modifymap>
+                            <name>eventos</name>
+                            <key><get name="fecha"/></key>
+                            <value><srai>changeitem <srai>finditem <get name="hora"/> in <map name="eventos"><get name="fecha"/></map></srai> by <get name="nueva_hora"/> in <map name="eventos"><get name="fecha"/></map></srai></value>
+                        </modifymap>
+                        </think>
+                    hora modificada correctamente.
+                </li>
+                <li>Ya hay un evento a esa hora, no se puede modificar.</li>
+            </condition>
+        </template>
+    </category>
+</topic>
+
+<category>
+    <pattern>CUENTA_EVENTOS_EL *</pattern>
+    <template>
+        <think>
+            <set var="count">
+        <srai>count <map name="eventos"><srai>quitarbarral <star/></srai></map></srai></set>
+        <set var="x"><map name="eventos"><srai>quitarbarral <star/></srai></map></set></think>
+        <condition var="x">
+            <li value="unknown">
+                0
+            </li>
+            <li>
+                <get var="count"/>
+            </li>
+        </condition>
+    </template>
+</category>
+
+<category>
+    <pattern>^ cuantos ^ eventos ^ el (dia) *</pattern>
+    <template>
+        <srai>CUENTA_EVENTOS_EL <star index="4"/></srai>
+    </template>
+</category>
+
+<category>
+    <pattern>^ [borra+ cancela+ elimina+ anula+] ^ [evento cita asunto]</pattern>
+    <template>que fecha tiene el evento?
+        <think><set name="topic">borrar_evento</set></think>
+    </template>
+</category>
+
+<topic name="borrar_evento">
+    <category>
+        <pattern>*</pattern>
+        <that>A QUE HORA ES EL EVENTO</that>
+        <template>Esa no es una hora válida</template>
+    </category>
+    <category>
+        <pattern><set>horas</set></pattern>
+        <that>A QUE HORA ES EL EVENTO</that>
+        <template>
+        <think>
+            <set name="hora"><srai>quitarpuntos <star/></srai></set>
+            <set name="clave"><srai>quitarespacios <srai> additem <get name="fecha"/> in <get name="hora"/></srai></srai></set>
+            <set name="var"><map name="evername"><get name="clave"/></map></set>
+        </think>
+            <condition name="var">
+                <li value="unknown">No tienes eventos a esa hora ese dia</li>
+                <li>estas seguro de que quieres borrar el evento?</li>
+            </condition>
+        </template>
+    </category>
+
+    <category>
+        <pattern>*</pattern>
+        <that>QUE FECHA TIENE EL EVENTO</that>
+        <template>a que hora es el evento?
+        <think>
+            <set name="fecha"><srai>quitarbarral <star/></srai></set>
+        </think>
+        </template>
+    </category>
+
+    <category>
+        <pattern>^ si ^ </pattern>
+        <template>
+            <think>
+                <removefrommap>
+                    <name>evper</name>
+                    <key><get name="clave"/></key>
+                </removefrommap>
+                <removefrommap>
+                    <name>evername</name>
+                    <key><get name="clave"/></key>
+                </removefrommap>
+
+                <set name="num"><srai>finditem <get name="hora"/> in <map name="eventos"><get name="fecha"/></map></srai></set>
+
+                <modifymap>
+                    <name>eventos</name>
+                    <key><get name="fecha"/></key>
+                    <value><srai>removeitem <get name="num"/> in <map name="eventos"><get name="fecha"/></map></srai></value>
+                </modifymap>
+
+                    </think>vale, evento borrado</template>
+    </category>
+
+    <category>
+        <pattern>^ no ^ </pattern>
+        <template>vale, no he borrado nada.<think><set name="topic">default</set></think></template>
+    </category>
+</topic>
+
+</aiml>

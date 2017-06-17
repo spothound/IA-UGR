@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+    <title>Algoritmos de Búsqueda informada en inteligencia artificial.</title>
+
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+
+    <script type="text/javascript" src="vis-4.18.1/dist/vis.js"></script>
+    <script src="./jquery.min.js"></script><!--importar jQuery-->
+    <link href="../../../dist/vis-network.min.css" rel="stylesheet" type="text/css"/>
+    
+    <script type="text/javascript" src="./grafo.js"></script>
+    <script type="text/javascript" src="./algorithms.js"></script> <!--biblioteca algoritmos--> 
+    <script type="text/javascript" src="./interface_handler.js"></script> <!--manejador de interfaz--> 
+    
+</head>
+
+<body onload="ih=new Interface_Handler();">
+
+<header>
+<nav>
+	<a href="http://decsai.ugr.es/"><img src="img/decsai_logo.jpg" alt="decsai_logo"/></a>
+	<ul>
+		<li><a id="despliegue_dibujar">Dibujar/Editar Grafo</a></li>
+		<li><a id="despliegue_importar">Importar Grafo</a></li>
+	</ul>
+	<div id="submenu">
+		<ul>
+			<li id="export-network" onclick="ih.exportNetwork();"><a>Exportar grafo</a></li>
+			<li id="generate-heuristic" onclick="ih.showDivGenerateHeuristic();"><a>Generar heurística</a></li>
+			<li id="end-network" onclick="ih.goResolutionMode();"><a>Ir al modo resolver grafo</a></li>
+			<li id="close-resolution-mode" onclick="ih.closeResolutionMode();"><a>Cerrar modo resolver grafo</a></li>
+		</ul>
+	</div>
+</nav>
+
+
+</header>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+<div id="principal">
+
+
+	<div id="network-form-div">
+		<p>Introduzca los parámetros necesarios para crear el grafo. En este modo de creación podemos crear un grafo añadiendo los nodos y las uniones uno a uno.</p>
+		<div id="network-form-div-node">
+			<h2>Nodo</h2>
+			<label for="node-id">Identificador del nodo</label>
+			<input id="node-id" type="text" value="">
+			
+			<br/>				
+			
+			<label for="node-heuristic">Valor heurístico</label>
+			<input id="node-heuristic" type="number" min="0" value="">
+			
+			<br/>				
+			
+			<input type="checkbox" name="initial" id="cb_initial_node" value="initial">Es nodo inicial <br/>
+			<input type="checkbox" name="initial" id="cb_final_node" value="end">Es nodo final<br/>
+							
+			<button id="node-add" onclick="ih.addNode();">Insertar</button>
+			<button id="node-update" onclick="ih.updateNode();">Actualizar</button>
+			<button id="node-remove" onclick="ih.removeNode();">Eliminar</button>
+		</div>
+
+		<div id="network-form-div-edge">
+			<h2>Arista</h2>
+										
+			<label for="edge-from">Desde</label>
+			<input id="edge-from" type="text" value="">
+			
+			<br/>	
+								
+			<label for="edge-to">Hasta</label>
+			<input id="edge-to" type="text" value="">
+			
+			<br/>
+
+			<label for="edge-cost">Coste</label>
+			<input id="edge-cost" type="number" min="0" value="">
+				
+			<br/>
+
+			<input type="checkbox" id="cb_directed_edge" value="directed">Es arista dirigida
+
+			<br/>
+							
+			<button id="edge-add" onclick="ih.addEdge();">Insertar</button>
+			<button id="edge-update" onclick="ih.updateEdge();">Actualizar</button>
+			<button id="edge-remove" onclick="ih.removeEdge();">Eliminar</button>
+		</div>
+							
+						
+	</div>
+
+
+
+	<div id="import-network-div">
+		<p>Importar un archivo. Si previamente exportó un archivo de este generador, puede importarlo desde aquí</p><br/>
+		<input type="file" id="import-network-input" name="datafile" size="40"/><br/><br/>
+		<button id="import-network-btn" onclick="ih.importNetwork();">Importar grafo</button>
+	</div>
+
+
+<!--QUITADOS HASTA AQUI LOS ESPACIOS, BIEN TABULADO-->
+
+
+</div>
+
+
+
+
+
+
+<hr/>
+
+
+<div id="resolution">
+	<h1>RESOLUCION DEL GRAFO</h1>
+    <table class="view">
+        <colgroup>
+            <col id="col-network-actual-estate">
+            <col id="col-network-select-algoritm">
+            <col id="col-network-control-buttons">
+        </colgroup>
+        <tr>
+            <td>
+                <h2 id="act-estate-algorithm-name">Estado actual del grafo</h2>
+                <div id="solution_network" class="network_box"></div>
+                Los nodos <span class="info_color_ini">rojos</span> indican <span class="info_color_ini">nodos iniciales</span>.<br/>
+    			Los nodos <span class="info_color_fin">verdes</span> indican <span class="info_color_fin">nodos finales</span>.<br/>
+            </td>
+
+            <td id="select-algorithm">
+                <h2>&nbsp;</h2>
+                <select id="algorithm-select">
+                    <option value="deep-search">Búsqueda en profundidad</option> 				<!--IMPLEMENTADO-->
+                    <option value="wide-search">Búsqueda en anchura</option>					<!--IMPLEMENTADO-->
+                    <option value="iterative-descent">Descenso iterativo</option>				<!--IMPLEMENTADO-->
+                    <option value="astar">A*</option>											<!--IMPLEMENTADO-->
+                    <option value="uniform-cost">Búsqueda de costo uniforme (Dijkstra)</option>	<!--IMPLEMENTADO-->
+                    <option value="retroactive-search">Búsqueda retroactiva</option>			<!--IMPLEMENTADO-->
+                    <option value="simple-climbing">Escalada simple</option>					<!--IMPLEMENTADO-->
+                    <option value="max-climbing">Escalada por la máxima pendiente</option>		<!--IMPLEMENTADO-->
+                    <!--<option value="simulated-annealing">Enfriamiento simulado</option>
+                    <option value="test-algorithm">TEST</option>-->    
+                </select>
+
+                <button id="solve-button" onclick="ih.solveNetwork();">Resolver</button><br/>
+
+                <label for="max_iter_bound"> Limite de iteraciones: </label>
+                <input id="max_iter_bound" type="number" min="1" max="1000" value="" required>
+
+                <!--Si no ocurre nada al pulsar el bot&oacute;n Resolver, prueba borrando la cach&eacute; del navegador.-->
+            </td>
+
+
+            <td id="control-buttons">
+                <h2>&nbsp;</h2>
+                <button id="step-fordward" class="algselectionbtn" onclick="ih.solutionStepForward();">Paso adelante</button>
+                <button id="step-back" class="algselectionbtn" onclick="ih.solutionStepBack();">Paso atras</button>
+                <button id="go-first-step" class="algselectionbtn" onclick="ih.solutionFirstStep();">Ir al principio</button>
+                <button id="go-last-step" class="algselectionbtn" onclick="ih.solutionLastStep();">Ir al final</button><br/>
+                <textarea id="textarea-openclosed" rows="5" readonly></textarea><br/>
+                <textarea id="textarea-explanation" rows="20" readonly></textarea><br/>
+                <button id="go-select-algorithm" onclick="ih.backToSelectAlgorithm();" >Cambiar el algoritmo</button><br/>
+            </td>
+            
+        </tr>
+    </table>
+</div>
+
+<div id="heuristic-generation">
+	<label for="min-changes-bound"> Número minimo de cambios: </label>
+	<input id="min-changes-bound" type="number" min="0" max="100" value="" required><br/>
+	<label for="max-changes-bound"> Número máximo de cambios: </label>
+	<input id="max-changes-bound" type="number" min="0" max="100" value="" required><br/>
+	<input type="checkbox" name="cb_admisible_heur" id="cb_admisible_heur" value="" onchange="ih.admisibleHeurChange();">Generar heurística admisible
+	<button id="btn-generate-heuristic" class="algselectionbtn" onclick="ih.generateHeuristic();">Generar heurística</button><br/>
+	
+</div>
+
+<hr/>
+
+<h1>Datos del grafo</h1>
+<table class="view">
+    <colgroup>
+        <!--<col width="25%">-->
+        <col id="col-network-data">
+        <col id="col-network-draw">
+    </colgroup>
+    <tr>
+        <!--<td>
+            <h2>Matriz de adyacencia</h2>
+            <pre id="adj-matrix-div"></pre>
+        </td>-->
+
+        <td>
+            <h2>Resto de datos</h2>
+            <pre id="rest-of-data-div"></pre>
+        </td>
+
+        <td>
+            <h2>Representación gráfica del grafo</h2>
+            <div id="network" class="network_box"></div>
+            Los nodos <span class="info_color_ini">rojos</span> indican <span class="info_color_ini">nodos iniciales</span>.<br/>
+			Los nodos <span class="info_color_fin">verdes</span> indican <span class="info_color_fin">nodos finales</span>.<br/>
+        </td>
+    </tr>
+</table>
+
+<!--<button id="export-network" onclick="ih.export_network();">Exportar grafo</button>
+<button id="generate-heuristic" onclick="ih.show_div_generate_heuristic();">Generar heurística</button>
+<button id="end-network" onclick="ih.go_resolution_mode();">Ir al modo resolver grafo</button>
+<button id="close-resolution-mode" onclick="ih.close_resolution_mode();">Cerrar modo resolver grafo</button>-->
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<div id="footer">
+    José Carlos Martínez Velázquez - Trabajo fin de Grado: Algoritmos de Búsqueda informada en inteligencia artificial. Universidad de Granada.
+</div>
+
+</body>
+</html>

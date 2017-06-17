@@ -1,0 +1,9 @@
+/home/pinguino/belkan/normal/CMakeFiles/BelkanSG.dir
+/home/pinguino/belkan/normal/CMakeFiles/Belkan.dir
+/home/pinguino/belkan/normal/CMakeFiles/rebuild_cache.dir
+/home/pinguino/belkan/normal/CMakeFiles/motorLib.dir
+/home/pinguino/belkan/normal/CMakeFiles/obj3DLib.dir
+/home/pinguino/belkan/normal/CMakeFiles/edit_cache.dir
+/home/pinguino/belkan/normal/CMakeFiles/GLUILib.dir
+/home/pinguino/belkan/normal/CMakeFiles/modelosBelkanLib.dir
+/home/pinguino/belkan/normal/CMakeFiles/comportamientosLib.dir

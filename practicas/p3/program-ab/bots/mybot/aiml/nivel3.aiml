@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+    <!-- TOPIC, ALTERNATIVAS -->
+    <topic name="alternativas">
+    <category>
+        <pattern>^ (alguna) ^ (otra) ^ [alternativa+ opcion+] ^  </pattern>
+        <template>
+            <think><set name="opcion"><srai>top <get name="alternativas"/></srai></set></think>
+            <condition name="opcion">
+                <li value="$">No, no hay otra alternativa
+                <think><set name="topic">default</set></think></li>
+                <li>
+                    si, tienes un hueco libre a las <srai>arreglahora <srai>top <get name="alternativas"/></srai></srai>
+                    <think><set name="alternativas"><srai>remain <get name="alternativas"/></srai></set></think>
+                </li>
+            </condition>
+        </template>
+    </category>
+    </topic>
+    <!--- fin del topic -->
+
+    <!-- TOPIC, ALTERNATIVAS2 -->
+    <topic name="alternativas2">
+    <category>
+        <pattern>^ (alguna) ^ (otra) ^ [alternativa+ opcion+] ^  </pattern>
+        <template>
+            <think><set name="opcion"><srai>top <get name="alternativas"/></srai></set></think>
+            <condition name="opcion">
+                <li value="$">No, no hay otra alternativa
+                <think><set name="topic">default</set></think></li>
+                <li>
+                    si, tienes una cita a las <srai>_fecha <srai>top <get name="alternativas"/></srai></srai>
+                    <think><set name="alternativas"><srai>remain <get name="alternativas"/></srai></set></think>
+                </li>
+            </condition>
+        </template>
+    </category>
+    </topic>
+
+    <category>
+        <pattern>^ cuando ^ [reunir+ event+ cita+ encuentro+ ver+] [con a] * </pattern>
+        <template>
+            <think>
+                <set var="x"><srai> ponerbarrabaja <star index="3"/></srai></set>
+                <set var="salida"></set>
+                <set name="lasfechas"><readkeys>evper</readkeys></set>
+            </think>
+                <condition name="lasfechas">
+                    <li value="$">
+                        tienes una cita a las <srai>_fecha <srai>top <get var="salida"/></srai></srai>
+                        <think>
+                            <set name="alternativas"><srai>remain <get var="salida"/></srai></set>
+                            <set name="topic">alternativas2</set>
+                        </think>
+                    </li>
+                    <li>
+                        <think>
+                        <set name="unaclave"><srai> top <get name="lasfechas"/></srai></set>
+                        <set name="lasfechas"><srai> remain <get name="lasfechas"/></srai></set>
+                        <set name="gente"><map name="evper"><get name="unaclave"/></map></set>
+                        <set name="pos"><srai>finditem <get var="x"/> in <get name="gente"/></srai></set>
+                        <condition name="pos">
+                            <li value="0"></li>
+                            <li>
+                                <set var="salida"><get name="unaclave"/> <get var="salida"/></set>
+                            </li>
+                        </condition>
+                        </think>
+                        <loop/>
+                    </li>
+                </condition>
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            (tengo) ^ hueco ^ libre ^ el *
+        </pattern>
+        <template>
+            <srai> _a <star index="4"/> de 1 a 50</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            (tengo) ^ hueco ^ libre ^ el * por la mañana
+        </pattern>
+        <template>
+            <srai> _a <star index="4"/> de 1 a 25</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            (tengo) ^ hueco ^ libre ^ el * por la tarde
+        </pattern>
+        <template>
+            <srai> _a <star index="4"/> de 26 a 41</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            (tengo) ^ hueco ^ libre ^ el * por la noche
+        </pattern>
+        <template>
+            <srai> _a <star index="4"/> de 42 a 50</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            (tengo) ^ hueco ^ libre ^ hoy
+        </pattern>
+        <template>
+            <srai> _a <date jformat="dd/MM/yyyy"/> de 1 a 50</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            (tengo) ^ hueco ^ libre ^ hoy por la mañana
+        </pattern>
+        <template>
+            <srai> _a <date jformat="dd/MM/yyyy"/> de 1 a 25</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            (tengo) ^ hueco ^ libre ^ hoy por la tarde
+        </pattern>
+        <template>
+            <srai> _a <date jformat="dd/MM/yyyy"/> de 26 a 41</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            (tengo) ^ hueco ^ libre ^ hoy por la noche
+        </pattern>
+        <template>
+            <srai> _a <date jformat="dd/MM/yyyy"/> de 42 a 50</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            (tengo) ^ hueco ^ libre ^ mañana
+        </pattern>
+        <template>
+            <srai> _a <star index="4"/> de 1 a 50</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            (tengo) ^ hueco ^ libre ^ mañana por la mañana
+        </pattern>
+        <template>
+            <srai> _a <star index="4"/> de 1 a 25</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            (tengo) ^ hueco ^ libre ^ mañana por la tarde
+        </pattern>
+        <template>
+            <srai> _a <star index="4"/> de 26 a 41</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern>
+            (tengo) ^ hueco ^ libre ^ mañana por la noche
+        </pattern>
+        <template>
+            <srai> _a <star index="4"/> de 42 a 50</srai>
+        </template>
+    </category>
+
+    <category>
+        <pattern> _a * de * a *</pattern>
+        <template>
+
+            <think><set name="valida"><srai>validar <star index="1"/></srai></set></think>
+            <condition name="valida">
+                <li value="YES">
+                    <think>
+                        <set name="fecha"> <srai>quitarbarral <star index="1"/></srai></set>
+                        <set name="horas"/><map name="eventos"><get name="fecha"/></map>
+                        <set name="alternativas">no tienes ningun hueco</set>
+                        </think>
+                    <condition name="horas">
+                        <li value="unknown">no tienes eventos ese dia</li>
+                        <li>
+                            <think>
+                                <set var="contador"><star index="2"/></set>
+                                <set var="salida"></set>
+                            </think>
+                            <condition var="contador">
+                                <li><value><star index="3"/></value>
+                                <think>
+                                    <set name="alternativas"><get var="salida"/></set>
+                                    <set name="topic">alternativas</set>
+                                    <set name="mostrar"><srai>arreglahora <srai>top <get name="alternativas"/></srai></srai></set>
+                                </think>
+                                <condition name="mostrar">
+                                    <li value="$:">
+                                        No tienes huecos...
+                                    </li>
+                                    <li>
+                                        tienes un hueco libre a las <get name="mostrar"/>
+                                        <think><set name="alternativas"><srai>remain <get name="alternativas"/></srai></set></think>
+                                    </li>
+                                </condition>
+                                </li>
+                                <li>
+                                    <think>
+                                        <set name="unahora"><map name="horan"><get var="contador"/></map></set>
+                                        <set var="pos"><srai>finditem <get name="unahora"/> in <map name="eventos"><get name="fecha"/></map></srai></set>
+                                        <condition var="pos">
+                                            <li value="0"></li>
+                                            <li>
+                                                <set var="salida"><get var="salida"/> <map name="horan"><get var="contador"/></map> </set>
+                                            </li>
+                                        </condition>
+                                        <set var="contador">
+                                            <map name="successor"><get var="contador"/></map>
+                                        </set>
+                                    </think>
+                                    <loop/>
+                                </li>
+                            </condition>
+                        </li>
+                <li value="NO">Esa fecha no es valida</li>
+                <li><get name="valida"/></li>
+                    </condition>
+                </li>
+                <li>No es una fecha válida</li>
+            </condition>
+        </template>
+    </category>
+
+    <category>
+        <pattern>^ (cual) [proxim+ sigui+] [cit+ event+ encuent+ asunt+] ^ hoy </pattern>
+        <template><srai>_siguiente_hoy_</srai></template>
+    </category>
+    <category>
+        <pattern>cual es el [proximo siguiente] evento hoy </pattern>
+        <template><srai>_siguiente_hoy_</srai></template>
+    </category>
+    <category>
+        <pattern>^ [proxim+ siguiente ] [cit+ event+ encuent+ asunt+] ^ mañana </pattern>
+        <template><srai> _siguiente_mañana_ </srai></template>
+    </category>
+
+        <category>
+        <pattern>cual es el [proximo siguiente] evento mañana </pattern>
+        <template><srai> _siguiente_mañana_ </srai></template>
+    </category>
+
+
+
+    <category>
+        <pattern> ^ [proxim+ siguient+] [cita evento encuentro asunto] el *</pattern>
+        <template>
+            <think><set name="valida"><srai>validar <star index="2"/></srai></set></think>
+            <condition name="valida">
+                <li value="YES">
+                    <think>
+                        <set name="fecha"> <srai>quitarbarral <star index="2"/></srai></set>
+                    </think>
+                    <srai> _siguiente_ <get name="fecha"/></srai>
+                </li>
+                <li value="NO">Esa fecha no es valida</li>
+                <li><get name="valida"/></li>
+            </condition>
+        </template>
+    </category>
+
+        <category>
+        <pattern> ^ ultim+  [cita evento encuentro asunto] el *</pattern>
+        <template>
+            <think><set name="valida"><srai>validar <star index="2"/></srai></set></think>
+            <condition name="valida">
+                <li value="YES">
+                    <think>
+                        <set name="fecha"> <srai>quitarbarral <star index="2"/></srai></set>
+                    </think>
+                    <srai> _ultimo_ <get name="fecha"/></srai>
+                </li>
+                <li value="NO">Esa fecha no es valida</li>
+                <li><get name="valida"/></li>
+            </condition>
+        </template>
+        </category>
+
+
+    <category>
+        <pattern>^ ultim+ [cit+ event+ encuentr+ asunt+] ^ hoy </pattern>
+        <template><srai>_ultimo_hoy_</srai></template>
+    </category>
+
+       <category>
+        <pattern>^ ultim+ [cit+ event+ encuentro+ asunt+] ^ mañana </pattern>
+        <template><srai>_ultimo_mañana_</srai></template>
+    </category>
+
+       <category>
+        <pattern>cual es [el la] ultim+ [cita evento encuentro asunto]  hoy </pattern>
+        <template><srai>_ultimo_hoy_</srai></template>
+    </category>
+
+       <category>
+        <pattern>cual es [el la] ultim+ [cita evento encuentro asunto]  mañana </pattern>
+        <template><srai>_ultimo_mañana_</srai></template>
+    </category>
+
+
+    <category>
+        <pattern>_dime_hoy</pattern>
+        <template><srai>quitarbarral <date jformat="dd/MM/yyyy"/></srai></template>
+    </category>
+
+    <category>
+        <pattern>_siguiente_hoy_</pattern>
+        <template>
+                <srai>_siguiente_ <srai>_dime_hoy</srai></srai>
+        </template>
+    </category>
+
+
+
+    <category>
+        <pattern>_siguiente_mañana_</pattern>
+        <template>
+                    <think>
+                        <set name="mañanaes"><srai>_mañana <srai>fecha <date jformat="dd/MM/yyyy"/></srai></srai></set>
+                        <set name="mañanaes"><srai>quitarbarral <get name="mañanaes"/></srai></set>
+                    </think>
+                <srai>_siguiente_ <get name="mañanaes"/></srai>
+        </template>
+    </category>
+
+        <category>
+        <pattern>_ultimo_hoy_</pattern>
+        <template>
+                <srai>_ultimo_ <srai>_dime_hoy</srai></srai>
+        </template>
+        </category>
+
+        <category>
+        <pattern>_ultimo_mañana_</pattern>
+        <template>
+                     <think>
+                        <set name="mañanaa"><srai>_mañana <srai>fecha <date jformat="dd/MM/yyyy"/></srai></srai></set>
+                        <set name="mañanaes"><srai>quitarbarral <get name="mañanaa"/></srai></set>
+                    </think>
+                <srai>_ultimo_ <get name="mañanaes"/></srai>
+        </template>
+    </category>
+
+
+    <category>
+        <pattern>_siguiente_ *</pattern>
+        <template>
+                    <think>
+                        <set var="contador">1</set>
+                        <set var="respues">Tienes el resto del día libre</set>
+                        <set name="eventos"><map name="eventos"><star/></map></set>
+                    </think>
+                    <condition name="eventos">
+                        <li value="unknown">Tienes el dia libre</li>
+                        <li>
+                    <condition var="contador">
+                        <li><value>50</value>tienes "<map name="evername"><star/><get var="respuesta"/></map>" a las <srai> arreglahora <get var="respuesta"/></srai></li>
+                        <li>
+                            <think>
+                                <set var="contador">
+                                    <map name="successor"><get var="contador"/></map>
+                                </set>
+                                <set var="hh"><map name="horan"><get var="contador"/></map></set>
+                                <set var="ee"><srai>finditem <get var="hh"/> in <map name="eventos"><star/></map></srai></set>
+                                <condition var="ee">
+                                    <li value="0"></li>
+                                    <li>
+                                        <set var="respuesta"><get var="hh"/></set>
+                                        <set var="contador">50</set>
+                                    </li>
+                                </condition>
+                            </think>
+                            <loop/>
+                        </li>
+                    </condition>
+                </li>
+                    </condition>
+        </template>
+    </category>
+
+
+
+    <category>
+        <pattern>_ultimo_ *</pattern>
+        <template>
+                    <think>
+                        <set var="contador">50</set>
+                        <set var="respues">Tienes el resto del día libre</set>
+                        <set name="eventos"><map name="eventos"><star/></map></set>
+                    </think>
+                    <condition name="eventos">
+                        <li value="unknown">Tienes el dia libre</li>
+                        <li>
+                    <condition var="contador">
+                        <li><value>0</value>tienes "<map name="evername"><star/><get var="respuesta"/></map>" a las <srai>arreglahora <get var="respuesta"/></srai></li>
+                        <li>
+                            <think>
+                                <set var="contador">
+                                    <map name="predecessor"><get var="contador"/></map>
+                                </set>
+                                <set var="hh"><map name="horan"><get var="contador"/></map></set>
+                                <set var="ee"><srai>finditem <get var="hh"/> in <map name="eventos"><star/></map></srai></set>
+                                <condition var="ee">
+                                    <li value="0"></li>
+                                    <li>
+                                        <set var="respuesta"><get var="hh"/></set>
+                                        <set var="contador">0</set>
+                                    </li>
+                                </condition>
+                            </think>
+                            <loop/>
+                        </li>
+                    </condition>
+                </li>
+                    </condition>
+        </template>
+    </category>
+
+
+    <category>
+        <pattern> ^ tengo el dia libre ^</pattern>
+        <template>
+                <think><set name="neventoshoy"><srai>CUENTA_EVENTOS_EL <date jformat="dd/MM/yyyy"/></srai></set></think>
+                <condition name="neventoshoy">
+                    <li value="0">SI!!!!!</li>
+                    <li> no tienes el dia libre </li>
+                </condition>
+        </template>
+    </category>
+
+    <category>
+        <pattern> ^ quien+ ^ reun+ el *</pattern>
+        <template>
+            <think><set name="valida"><srai>validar <star index="3"/></srai></set></think>
+            <condition name="valida">
+                <li value="YES">
+                    <think>
+                        <set name="fecha">  <srai>quitarespacios <srai>REMOVEITEM 3 IN <srai> DELETREA <star index="3"/> </srai></srai></srai></set>
+                        <set name="fecha">  <srai>quitarespacios <srai>REMOVEITEM 5 IN <srai> DELETREA <get name="fecha"/> </srai></srai></srai></set>
+                        <set name="horas"><map name="eventos"><get name="fecha"/></map>
+                        </set>
+                        <set name="iterator"><get name="horas"/></set>
+                        <set name="resultado"> </set>
+                    </think>
+                    <condition name="horas">
+                        <li value="unknown">no tienes eventos ese dia</li>
+                        <li>
+                            <condition name="iterator">
+                                <li value="$"></li>
+                                <li>
+                                    <think>
+                                        <set name="unahora"><srai>iterate <get name="iterator"/></srai></set>
+                                        <set name="clave">
+                                            <srai> quitarespacios
+                                            <srai>ADDITEM <get name="fecha"/> IN <get name="unahora"/>
+                                            </srai>
+                                            </srai>
+                                        </set>
+                                        <set name="gente"><map name="evper"><get name="clave"/></map></set>
+                                        <condition name="gente">
+                                            <li value="unknown"></li>
+                                            <li>
+                                                <set name="resultado"> <get name="gente"/> <get name="resultado"/></set>
+                                                <set name="preresultado"><srai>top <get name="resultado"/></srai></set>
+                                            </li>
+                                        </condition>
+                                    </think>
+                                    <loop/>
+                                </li>
+                            </condition>
+                            <condition name="preresultado">
+                                <li value="unknown">
+                                    <think>
+                                    <set name="resultado">nadie</set>
+                                    <set name="previo">no </set>
+                                    </think>
+                                </li>
+                                <li><set name="previo"></set>
+                                </li>
+                            </condition>
+                            <get name="previo"/> tienes que reunirte con <srai>_listarbien <get name="resultado"/></srai>
+                        </li>
+                    </condition>
+                    </li>
+                    <li value="NO">Esa fecha no es valida</li>
+                    <li><get name="valida"/></li>
+                </condition>
+        </template>
+    </category>
+
+
+        <category>
+        <pattern>^ quien+ ^ reun+ ^ hoy</pattern>
+        <template>
+                <srai> con quienes me tengo que reunir el <date jformat="dd/MM/yyyy"/></srai>
+        </template>
+        </category>
+
+        <category>
+        <pattern>^ quien+ ^ reun+ ^ mañana</pattern>
+        <template>
+                     <think>
+                        <set name="mañanaa"><srai>_mañana <srai>fecha <date jformat="dd/MM/yyyy"/></srai></srai></set>
+                        <set name="mañanaes"><srai>quitarbarral <get name="mañanaa"/></srai></set>
+                    </think>
+                <srai>con quienes me tengo que reunir el <get name="mañanaa"/></srai>
+        </template>
+    </category>
+
+
+
+
+
+</aiml>

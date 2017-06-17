@@ -1,0 +1,29 @@
+	bool situado = false ;
+	bool lotengo[4] = { false, false, false, false} ;
+	if(situado)
+	   mapaResultado[sensores.mensajeF][sensores.mensajeC] = sensores.superficie[0] ;
+	char enfrente = sensores.terreno[2] ;
+	switch(enfrente){
+		case 'B': // arbol
+		case 'P': // precipicio
+		case 'M': // muro
+				accion = actTURN_L ;
+				break ;
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+			int obj = enfrente - "0" ;
+			if(lotengo[obj]){
+				accion = actTURN_L ;
+			}else{
+				accion = actPICKUP ;
+			}break ;
+		case 'K': // marcador GPS
+			situado = true ;
+			break ;
+		default:
+			accion = actFORWARD ;
+			break;
+		}
+	return accion;

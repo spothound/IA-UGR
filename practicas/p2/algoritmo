@@ -1,0 +1,36 @@
+// crear la tabla
+- Seleccionamos entre el origen y el destino y los cortes de sus prolongaciones una esquina superior izquierda y una inferior derecha y guardamos sus posiciones (supi, infd) pueden ser ambas orig o ambas dest
+- Creamos una matriz que empieza 3 filas y 3 columnas antes que supi y termina 3 filas y 3 columnas después de infd.
+-Rellenamos la matriz con la distancia manhatam a orig, poniendo infinito en las casillas que no se pueden pisar.
+-Rellenamos los bordes de la matriz (primera y ultima fila y columna) con infinitos.
+-ponemos a la casilla origen un 1
+
+// utilizar la tabla.
+
+* Diseñamos en primer lugar una función que, dados una fila y una columna te devuelva la fila y la columna adyacente (no valen diagonales) con menor valor DevuelveMin(a,b) y además te devuelve un booleano diciendo si había más de una casilla con valor mínimo. Nota: para esta función, las casillas adyacentes con valores 0 o negativos valen infinito. Si no hay ninguna casilla con menos valor que la propia, devuelve la propia casilla. 
+
+* M es la matriz
+* C es una cola de casillas con varias adyacentes iguales.
+
+Hacemos:
+
+int a,b,al,bl,c,d;
+al = a = origen.fila
+bl = b = origen.columna
+bool doble ;
+while( M[origen1][origen2] >0 and M[al][bl] != inf){
+       M[a][b] = 0-C.size() ;
+       doble,c,d = DevuelveMin(a,b) ;
+       if(doble){
+        C.push(a,b)
+       if(c,d != a,b)
+              a,b = c,d ;
+       else if !C.empty(){
+        M[c,d] = INF;
+        si hay una casilla adyacente con valor 0-C.size() le ponemos infinito-
+        al,bl = C.top() ;
+        if M[al][bl] = inf:
+           C.pop ; al,bl = C.top ;
+        a,b = al,bl ;
+
+

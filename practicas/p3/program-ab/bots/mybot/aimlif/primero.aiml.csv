@@ -1,0 +1,14 @@
+0,^ ME LLAMO *,*,*,<think>#Newline                <set name="su_nombre"><star index="2"/></set>#Newline            </think>#Newline            Me alegro de conocerte#Comma <get name="su_nombre"/>,primero.aiml
+0,^ MI NOMBRE ES *,*,*,<think>#Newline            <set name="su_nombre"><star index="2"/></set>#Newline        </think>#Newline        Me alegro de conocerte#Comma <get name="su_nombre"/>,primero.aiml
+0,^ HOLA ^,*,*,Hola#Comma que tal?,primero.aiml
+0,HOLA,*,*,Hola#Comma que tal?,primero.aiml
+0,^ BUEN+ [DIA+ NOCHE+ TARDE+] ^,*,*,<srai>HOLA</srai>,primero.aiml
+0,^ SALUDO+ ^,*,*,<srai>HOLA</srai>,primero.aiml
+0,^ COMO TE LLAMAS,*,*,me llamo <bot name="name"/>,primero.aiml
+0,QUE TAL ^,*,*,Todo lo bien que se puede estar siendo un bot,primero.aiml
+0,(ESTOY) BIEN,^ QUE TAL ^,*,me parece fantabuloso,primero.aiml
+0,CUAL ES MI NOMBRE,*,*,<condition name="su_nombre">#Newline                <li value="unknown"> aun no me has dicho como te llamas</li>#Newline                <li> Tu nombre es <get name="su_nombre"/></li>#Newline            </condition>,primero.aiml
+0,^ CUAL ES MI NOMBRE+ ^,*,*,<srai>CUAL ES MI NOMBRE</srai>,primero.aiml
+0,^ COMO ME LLAM+ ^,*,*,<srai>CUAL ES MI NOMBRE</srai>,primero.aiml
+0,*,AUN NO ME HAS DICHO COMO TE LLAMAS,*,<think>#Newline              <set name="su_nombre"><star index="1"/></set>#Newline          </think>#Newline          Me alegro de conocerte#Comma <get name="su_nombre"/>,primero.aiml
+0,*,*,*,No te entiendo...,primero.aiml

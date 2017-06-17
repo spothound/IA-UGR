@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+
+    <category>
+        <pattern>^ [conoc+ agrega+ añad+] ^ [contacto alguien persona amigo conoc+] ^ </pattern>
+        <template>dime el apellido
+        <think>
+            <set name="topic">contactos</set>
+        </think>
+
+        </template>
+    </category>
+
+    <category>
+        <pattern>^ gracias ^ </pattern>
+        <template> de nada </template>
+    </category>
+
+
+    <!-- TOPIC, CONTACTOS -->
+    <topic name="contactos">
+        <category>
+            <pattern>^ [conoc+ agreg+ añad+] ^ otro ^</pattern>
+            <template>dime el apellido
+
+            </template>
+        </category>
+
+        <category>
+            <pattern>_nuevoapellido <set>apellidos</set></pattern>
+            <template>No es posible añadir el contacto porque esta ya en la base de datos
+            </template>
+        </category>
+
+        <category>
+            <pattern> (perdona) (equivo+) (fallo) (queria decir) (era) * </pattern>
+            <that>NO ES POSIBLE AÑADIR EL CONTACTO PORQUE YA ESTA EN LA BASE DE DATOS</that>
+            <template>
+                <think>
+                    <set name="apellido"><star/></set>
+                </think>
+                dime el nombre
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <that>dime el apellido</that>
+            <template>
+                    <srai>_nuevoapellido <srai>ponerbarrabaja <star/></srai></srai>
+                    </template>
+        </category>
+
+        <category>
+            <pattern>_nuevoapellido *</pattern>
+            <template>dime el nombre
+            <think>
+                <set name="apellido"><srai>ponerbarrabaja <star/> </srai></set>
+            </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <that>dime el nombre </that>
+            <template>dime su domicilio
+            <think>
+                <set name="nombre"><srai>ponerbarrabaja <star/> </srai></set>
+            </think>
+            </template>
+        </category>
+        <category>
+            <pattern>*</pattern>
+            <that>dime su domicilio</that>
+            <template>dime su telefono
+            <think>
+                <set name="domicilio"><srai>ponerbarrabaja <star/> </srai></set>
+            </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <that>dime su telefono</that>
+            <template>contacto guardado
+            <think>
+                <set name="telefono"><srai>ponerbarrabaja <star/> </srai></set>
+                <addtomap>
+                    <name>telefono</name>
+                    <key><get name="apellido"/></key>
+                    <value><get name="telefono"/></value>
+                </addtomap>
+                <addtomap>
+                    <name>domicilio</name>
+                    <key><get name="apellido"/></key>
+                    <value><get name="domicilio"/></value>
+                </addtomap>
+                <addtomap>
+                    <name>nombre</name>
+                    <key><get name="apellido"/></key>
+                    <value><get name="nombre"/></value>
+                </addtomap>
+                <addtoset>
+                    <name>apellidos</name>
+                    <key><get name="apellido"/></key>
+                </addtoset>
+
+                <modifymap>
+                    <name>info</name>
+                    <key>ncontactos</key>
+                    <value><map name="successor"><map name="info">ncontactos</map></map></value>
+                </modifymap>
+            </think>
+            </template>
+        </category>
+
+    </topic>
+    <!-- FIN DE TOPIC CONTACTOS - OTRAS REGLAS -->
+
+
+        <category>
+            <pattern> ^ (podrias) ^ cuantos ^ contactos ^ (tengo) </pattern>
+            <template> tienes <srai>_CUANTOS_CONTACTOS</srai> contactos.
+            </template>
+        </category>
+
+        <category>
+            <pattern>^ que contactos ^</pattern>
+            <template>tienes a <srai>_QUE_CONTACTOS</srai></template>
+        </category>
+        <category>
+            <pattern>^ (dime) (dec+) (quien+) (mis) [contactos agregados cono+]</pattern>
+            <template> tienes agregados a: <srai>_QUE_CONTACTOS</srai>.
+            </template>
+        </category>
+
+    <!-- TOPIC, MODIFICAR CONTACTOS -->
+    <topic name="m_contactos">
+        <category>
+            <pattern> ^ queria decir <set>apellidos</set> </pattern>
+            <template> que quieres modificar?
+            </template>
+        </category>
+
+        <category>
+            <pattern> ^ queria decir * </pattern>
+            <template> Tampoco hay ningun contacto con ese apellido.
+            </template>
+        </category>
+
+        <category>
+            <pattern> ^ [erro+ equivo+] ^ </pattern>
+            <template>Que contacto quieres modificar?</template>
+        </category>
+
+        <category>
+            <pattern> ^ direccion ^ </pattern>
+            <template> cual es la nueva direccion ?</template>
+        </category>
+
+        <category>
+            <pattern> ^ nombre ^ </pattern>
+            <template> cual es el nombre correcto?</template>
+        </category>
+
+        <category>
+            <pattern> ^ telefono ^ </pattern>
+            <template>cual es el nuevo telefono?</template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <that>CUAL ES EL NUEVO TELEFONO</that>
+            <template> Perfecto, el telefono ha sido actualizado
+            <think>
+                <modifymap>
+                    <name>telefono</name>
+                    <key><get name="apellido"></get></key>
+                    <value><star/></value>
+                </modifymap>
+            </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <that>CUAL ES EL NOMBRE CORRECTO</that>
+            <template> Perfecto, el nombre ha sido corregido.
+            <think>
+                <modifymap>
+                    <name>nombre</name>
+                    <key><get name="apellido"></get></key>
+                    <value><star/></value>
+                </modifymap>
+            </think>
+            </template>
+        </category>
+
+        <category>
+            <pattern>*</pattern>
+            <that>CUAL ES LA NUEVA DIRECCION</that>
+            <template> Perfecto, la direccion ha sido actualizada
+            <think>
+                <modifymap>
+                    <name>direccion</name>
+                    <key><get name="apellido"></get></key>
+                    <value><start/></value>
+                </modifymap>
+            </think>
+            </template>
+        </category>
+
+
+    </topic>
+
+    <!-- FIN DE MODIFICACIÓN DE CONTACTOS -->
+
+    <category>
+        <pattern> ^ (podrias) ^ [que lista cuales list+] ^ [contactos conocidos amigos agregados gente] (tengo) </pattern>
+        <template> tienes a <srai>_QUE_CONTACTOS</srai>.
+        </template>
+    </category>
+
+    <category>
+        <pattern> ^ (podrias) ^ cuantos ^ contactos (tengo) </pattern>
+        <template> tienes <srai>_CUANTOS_CONTACTOS</srai> contactos.
+        </template>
+    </category>
+
+    <category>
+        <pattern> ^ [modificar actualizar cambiar] ^ (datos) [contacto amig+ conocid+ familiar alguien agregad+]</pattern>
+        <template>Que contacto quieres modificar?</template>
+    </category>
+
+    <category>
+        <pattern><set>apellidos</set></pattern>
+        <that>QUE CONTACTO QUIERES MODIFICAR</that>
+        <template> Quieres modificar la direccion, el telefono o el nombre?
+        <think>
+            <set name="topic">m_contactos</set>
+            <set name="apellido"><star/></set>
+        </think>
+        </template>
+    </category>
+    <category>
+        <pattern>*</pattern>
+        <that>QUE CONTACTO QUIERES MODIFICAR</that>
+        <template> No hay ningun contacto con ese apellido.
+        <think>
+            <set name="topic">m_contactos</set>
+        </think>
+        </template>
+    </category>
+
+    <category>
+        <pattern>DIME_EL_TELEFONO_DE *</pattern>
+        <template>no tienes agregado a ningún contacto con ese apellido.</template>
+    </category>
+    <category>
+        <pattern>DIME_EL_TELEFONO_DE <set>apellidos</set></pattern>
+        <template>su telefono es <map name="telefono"><star/></map></template>
+    </category>
+
+    <category>
+        <pattern>^ telefono de *</pattern>
+        <template><srai>quiero llamar a <star index="2"/></srai></template>
+    </category>
+
+     <category>
+        <pattern> quiero llamar a *</pattern>
+        <template><srai>DIME_EL_TELEFONO_DE
+        <srai>ponerbarrabaja <star index="1"/></srai>
+        </srai></template>
+    </category>
+
+        <category>
+        <pattern>DIME_EL_TELEFONO_DE *</pattern>
+        <template>no tienes agregado a ningún contacto con ese apellido.</template>
+
+
+    </category>
+    <category>
+        <pattern>DIME_LA_DIRECCION_DE <set>apellidos</set></pattern>
+        <template>su direccion es <map name="domicilio"><star/></map></template>
+    </category>
+
+    <category>
+        <pattern>DIME_LA_DIRECCION_DE *</pattern>
+        <template>no tienes agregado ningun contacto con esa direccion</template>
+    </category>
+
+     <category>
+        <pattern> ^ direccion de *</pattern>
+        <template><srai>DIME_LA_DIRECCION_DE
+        <srai>ponerbarrabaja <star index="2"/></srai>
+        </srai></template>
+    </category>
+
+
+    <category>
+        <pattern>DIME_EL_NOMBRE_DE <set>apellidos</set></pattern>
+        <template>su nombre es <map name="nombre"><star/></map></template>
+    </category>
+    <category>
+        <pattern>DIME_EL_NOMBRE_DE * </pattern>
+        <template>No tienes agregado ningun contacto con ese apellido</template>
+    </category>
+
+     <category>
+        <pattern> ^ nombre de *</pattern>
+        <template><srai>DIME_EL_NOMBRE_DE
+        <srai>ponerbarrabaja <star index="2"/></srai>
+        </srai></template>
+    </category>
+
+
+    <category>
+        <pattern> ^ [borra+ elimina+ suprim+ implosion+ olvid+] ^ [contact+ conocid+ amig+ person+ alguien] ^ </pattern>
+        <template>dime el apellido del contacto a borrar</template>
+    </category>
+
+    <category>
+        <pattern>*</pattern>
+        <that>DIME EL APELLIDO DEL CONTACTO A BORRAR</that>
+        <template><srai>_Borrame_ <srai>ponerbarrabaja <star/></srai></srai></template>
+    </category>
+
+
+        <category>
+            <pattern>_Borrame_ <set>apellidos</set> </pattern>
+            <template>
+                <think><set name="apellido"><star/></set></think>
+                Estas seguro de querer borrarlo?
+            </template>
+        </category>
+        <category>
+            <pattern>_Borrame_ *</pattern>
+            <template>
+                No hay ningun contacto con apellido <star/>
+            </template>
+        </category>
+
+        <category>
+            <pattern>^ si ^ </pattern>
+            <that>ESTAS SEGURO DE QUERER BORRARLO</that>
+            <template> Pues ya esta, contacto borrado. Al final te quedas sin amigos.
+            <think>
+                 <removefrommap>
+                 <name>telefono</name>
+                 <key><get name="apellido"></get></key>
+                 </removefrommap>
+                 <removefrommap>
+                 <name>nombre</name>
+                 <key><get name="apellido"></get></key>
+                 </removefrommap>
+                 <removefrommap>
+                 <name>domicilio</name>
+                 <key><get name="apellido"></get></key>
+                 </removefrommap>
+                 <removefromset>
+                 <name>apellidos</name>
+                 <key><get name="apellido"></get></key>
+                 </removefromset>
+            </think>
+            </template>
+        </category>
+
+
+        <category>
+            <pattern> ^ numero de contactos ^</pattern>
+            <template><srai>_CUANTOS_CONTACTOS</srai></template>
+        </category>
+
+
+
+        <!-- INTERFAZ -->
+
+
+        <category>
+            <pattern>_listarbien *</pattern>
+            <template>
+                <think>
+                    <set var="salida"></set>
+                    <set var="contactos"><star/></set>
+                    <set var="contactos"><srai>remain <get var="contactos"/></srai></set>
+                    <set var="uncont"><srai>top <get var="contactos"/></srai></set>
+                    <condition var="uncont">
+                        <li value="$">
+                            no tienes ningun contacto agregado.
+                        </li>
+                        <li>
+                            <set var="salida"><get var="salida"/> <srai>espaciosporbarrabajas <get var="uncont"/> </srai> </set>
+                            <set var="contactos"><srai>remain <get var="contactos"/></srai></set>
+                            <set var="uncont"><srai>top <get var="contactos"/></srai></set>
+                        </li>
+                    </condition>
+                </think>
+                <condition var="uncont">
+                    <li value="$"><get var="salida"/></li>
+                    <li>
+                        <think>
+                            <set var="proxcontactos"><srai>remain <get var="contactos"/></srai></set>
+                            <condition var="proxcontactos">
+                                <li value="$">
+                                    <set var="salida"><get var="salida"/> y <srai>espaciosporbarrabajas <get var="uncont"/> </srai></set>
+                                </li>
+                                <li>
+                                    <set var="salida"><get var="salida"/>, <srai>espaciosporbarrabajas <get var="uncont"/> </srai></set>
+                                </li>
+                            </condition>
+                            <set var="contactos"><srai>remain <get var="contactos"/></srai></set>
+                            <set var="uncont"><srai>top <get var="contactos"/></srai></set>
+                        </think>
+                        <loop/>
+                    </li>
+                </condition>
+            </template>
+        </category>
+
+        <category>
+            <pattern>_QUE_CONTACTOS</pattern>
+            <template>
+               <srai>_listarbien <readset>apellidos</readset></srai>
+            </template>
+        </category>
+
+    <category>
+        <pattern>_CUANTOS_CONTACTOS</pattern>
+        <template><srai>COUNT  <readset>apellidos</readset></srai></template>
+    </category>
+
+    <category>
+<pattern>Cuenta hasta <set>number</set></pattern>
+<template>
+   <think>
+       <set var="contador">1</set>
+       <set var="salida">1</set>
+   </think>
+   <condition var="contador">
+       <li><value><star/></value><get var="salida"/></li>
+       <li>
+           <think>
+           <set var="contador">
+              <map name="successor"><get var="contador"/></map>
+           </set>
+           <set var="salida"><get var="salida"/> <get var="contador"/></set>
+           </think>
+           <loop/>
+       </li>
+   </condition>
+</template>
+    </category>
+
+    <category>
+<pattern>Cuenta desde * hasta *</pattern>
+<template>
+   <think>
+       <set var="contador"><star index="1"/></set>
+       <set var="salida"><star index="1"/></set>
+   </think>
+   <condition var="contador">
+       <li><value><star index="2"/></value><get var="salida"/></li>
+       <li>
+           <think>
+           <set var="contador">
+              <map name="successor"><get var="contador"/></map>
+           </set>
+           <set var="salida"><get var="salida"/> <get var="contador"/></set>
+           </think>
+           <loop/>
+       </li>
+   </condition>
+</template>
+</category>
+
+
+</aiml>

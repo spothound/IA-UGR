@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+    <category>
+        <pattern>^ me llamo * </pattern>
+        <template>
+            <think>
+                <set name="su_nombre"><star index="2"/></set>
+            </think>
+            Me alegro de conocerte, <get name="su_nombre"/>
+        </template>
+    </category>
+
+    <category>
+        <pattern> ^ mi nombre es * </pattern>
+        <template>
+        <think>
+            <set name="su_nombre"><star index="2"/></set>
+        </think>
+        Me alegro de conocerte, <get name="su_nombre"/>
+        </template>
+    </category>
+
+    <!-- Saludos, camarada! -->
+    <category>
+        <pattern> ^ hola ^</pattern>
+        <template>Hola, que tal? </template>
+    </category>
+
+    <category>
+        <pattern>HOLA</pattern>
+        <template>Hola, que tal?</template>
+    </category>
+
+    <category>
+        <pattern>^ buen+ [dia+ noche+ tarde+] ^</pattern>
+        <template><srai>HOLA</srai></template>
+    </category>
+
+    <category>
+        <pattern>^ Saludo+ ^</pattern>
+        <template><srai>HOLA</srai></template>
+    </category>
+
+    <category>
+        <pattern>^ como te llamas</pattern>
+        <template>me llamo <bot name="name"/></template>
+    </category>
+
+    <category>
+        <pattern> que tal ^</pattern>
+        <template> Todo lo bien que se puede estar siendo un bot </template>
+    </category>
+
+     <category>
+        <pattern> (estoy) bien</pattern>
+        <that> ^ que tal ^ </that>that>
+        <template> me parece fantabuloso </template>
+     </category>
+
+      <category>
+        <pattern>CUAL ES MI NOMBRE</pattern>
+        <template>
+            <condition name="su_nombre">
+                <li value="unknown"> aun no me has dicho como te llamas</li>
+                <li> Tu nombre es <get name="su_nombre"/></li>
+            </condition>
+        </template>
+        </category>
+
+      <category>
+          <pattern>^ cual es mi nombre+ ^</pattern>
+          <template><srai>CUAL ES MI NOMBRE</srai></template>
+      </category>
+      <category>
+          <pattern>^ como me llam+ ^</pattern>
+          <template><srai>CUAL ES MI NOMBRE</srai></template>
+      </category>
+
+      <category>
+          <pattern>*</pattern>
+          <that>aun no me has dicho como te llamas</that>
+          <template>
+          <think>
+              <set name="su_nombre"><star index="1"/></set>
+          </think>
+          Me alegro de conocerte, <get name="su_nombre"/>
+          </template>
+      </category>
+
+      <category>
+          <pattern> * </pattern>
+          <template> No te entiendo...</template>
+      </category>
+
+</aiml>

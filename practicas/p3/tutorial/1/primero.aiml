@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+
+<!-- regla 1 -->
+<category>
+<pattern>Hola</pattern>
+<template>Hola, que tal?</template>
+</category>
+
+<!-- regla 2 -->
+<category>
+<pattern>yo bien, que tal tu</pattern>
+<template>Estoy genial!!!</template>
+</category>
+
+<!-- regla 3 -->
+<category>
+<pattern> como te llamas</pattern>
+<template> mi nombre es HALberto</template>
+</category>
+
+</aiml>
